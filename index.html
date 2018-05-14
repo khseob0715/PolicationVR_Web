@@ -17,6 +17,7 @@
 	<!-- Custom styles CSS -->
 	<link href="assets/css/style.css" rel="stylesheet" media="screen">
 
+	
 	<!-- amchart -->
 	<script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
     <script src="assets/amcharts/serial.js" type="text/javascript"></script>
@@ -127,7 +128,7 @@ $user = "SELECT * FROM user WHERE User_email = '$Uemail'";
 $userresult = mysqli_query($mysqli, $user);
 $userrow = mysqli_fetch_array($userresult);
 
-$gradeseq = "SELECT * FROM grade WHERE User_sequence = 20 AND Test_Case = 1";
+$gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 1";
 $gradeseqresult = mysqli_query($mysqli, $gradeseq);
 
 $nsd1 = mysqli_num_rows($gradeseqresult);
@@ -222,13 +223,13 @@ mysqli_close($mysqli);
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("Case 1", 24);
+                chart.addTitle("CrimeScene 01", 24);
                 chart.addClassNames = true;
                 chart.dataProvider = chartData1;
                 chart.categoryField = "date";
                 chart.dataDateFormat = "YYYY-MM-DD";
                 chart.startDuration = 1;
-                chart.color = "#FFFFFF";
+                chart.color = "#161616";
                 chart.marginLeft = 0;
                 chart.addListener("dataUpdated", zoomChart1);
 
@@ -240,8 +241,9 @@ mysqli_close($mysqli);
                 categoryAxis.autoGridCount = false;
                 categoryAxis.gridCount = 8;
                 categoryAxis.gridAlpha = 0.1;
-                categoryAxis.gridColor = "#FFFFFF";
+                categoryAxis.gridColor = "#161616";
                 categoryAxis.axisColor = "#555555";
+                categoryAxis.fillColor = "#161616";
                 // we want custom date formatting, so we change it in next line
                 categoryAxis.dateFormats = [{
                     period: 'DD',
@@ -264,6 +266,7 @@ mysqli_close($mysqli);
                 scoreAxis.title = "Score";
                 scoreAxis.gridAlpha = 0;
                 scoreAxis.axisAlpha = 0;
+                scoreAxis.color = "#161616";
                 chart.addValueAxis(scoreAxis);
 
                 var averageAxis = new AmCharts.ValueAxis();
@@ -271,6 +274,7 @@ mysqli_close($mysqli);
                 averageAxis.gridAlpha = 0;
                 averageAxis.axisAlpha = 0;
                 averageAxis.inside = false;
+                averageAxis.color = "#161616";
                 averageAxis.position = "right";
                 chart.addValueAxis(averageAxis);
 
@@ -286,7 +290,7 @@ mysqli_close($mysqli);
                 checkGraph.balloonText = "[[value]]";
                 checkGraph.legendValueText = ": [[value]]";
                 checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#263138";
+                checkGraph.lineColor = "#ED5565";
                 checkGraph.alphaField = "alpha";
                 chart.addGraph(checkGraph);
 
@@ -300,7 +304,7 @@ mysqli_close($mysqli);
                 gatherGraph.balloonText = "[[value]]";
                 gatherGraph.legendValueText = ": [[value]]";
                 gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#333520";
+                gatherGraph.lineColor = "#4FC1E9";
                 gatherGraph.alphaField = "alpha";
                 chart.addGraph(gatherGraph);
 
@@ -314,7 +318,7 @@ mysqli_close($mysqli);
                 investGraph.balloonText = "[[value]]";
                 investGraph.legendValueText = ": [[value]]";
                 investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#382626";
+                investGraph.lineColor = "#48CFAD";
                 investGraph.alphaField = "alpha";
                 chart.addGraph(investGraph);
 
@@ -368,7 +372,7 @@ mysqli_close($mysqli);
                 legend.equalWidths = false;
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
-                legend.color = "#FFFFFF";
+                legend.color = "#161616";
                 chart.addLegend(legend);
 
                 // WRITE
@@ -425,13 +429,13 @@ function zoomChart1() {
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("Case 2", 24);
+                chart.addTitle("CrimeScene 02", 24);
                 chart.addClassNames = true;
                 chart.dataProvider = chartData2;
                 chart.categoryField = "date";
                 chart.dataDateFormat = "YYYY-MM-DD";
                 chart.startDuration = 1;
-                chart.color = "#FFFFFF";
+                chart.color = "#161616";
                 chart.marginLeft = 0;
                 chart.addListener("dataUpdated", zoomChart2);
 
@@ -443,8 +447,9 @@ function zoomChart1() {
                 categoryAxis.autoGridCount = false;
                 categoryAxis.gridCount = 8;
                 categoryAxis.gridAlpha = 0.1;
-                categoryAxis.gridColor = "#FFFFFF";
+                categoryAxis.gridColor = "#161616";
                 categoryAxis.axisColor = "#555555";
+                categoryAxis.fillColor = "#161616";
                 // we want custom date formatting, so we change it in next line
                 categoryAxis.dateFormats = [{
                     period: 'DD',
@@ -489,7 +494,7 @@ function zoomChart1() {
                 checkGraph.balloonText = "[[value]]";
                 checkGraph.legendValueText = ": [[value]]";
                 checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#263138";
+                checkGraph.lineColor = "#ED5565";
                 checkGraph.alphaField = "alpha";
                 chart.addGraph(checkGraph);
 
@@ -503,7 +508,7 @@ function zoomChart1() {
                 gatherGraph.balloonText = "[[value]]";
                 gatherGraph.legendValueText = ": [[value]]";
                 gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#333520";
+                gatherGraph.lineColor = "#4FC1E9";
                 gatherGraph.alphaField = "alpha";
                 chart.addGraph(gatherGraph);
 
@@ -517,7 +522,7 @@ function zoomChart1() {
                 investGraph.balloonText = "[[value]]";
                 investGraph.legendValueText = ": [[value]]";
                 investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#382626";
+                investGraph.lineColor = "#48CFAD";
                 investGraph.alphaField = "alpha";
                 chart.addGraph(investGraph);
 
@@ -563,6 +568,7 @@ function zoomChart1() {
                 chartCursor.valueLineBalloonEnabled = true;
                 chartCursor.valueLineEnabled = true;
                 chartCursor.valueLineAlpha = 0.5;
+
                 chart.addChartCursor(chartCursor);
 
                 // LEGEND
@@ -571,7 +577,7 @@ function zoomChart1() {
                 legend.equalWidths = false;
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
-                legend.color = "#FFFFFF";
+                legend.color = "#161616";
                 chart.addLegend(legend);
 
                 // WRITE
@@ -628,13 +634,13 @@ function zoomChart2() {
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("Case 3", 24);
+                chart.addTitle("CrimScene 03", 24);
                 chart.addClassNames = true;
                 chart.dataProvider = chartData3;
                 chart.categoryField = "date";
                 chart.dataDateFormat = "YYYY-MM-DD";
                 chart.startDuration = 1;
-                chart.color = "#FFFFFF";
+                chart.color = "#161616";
                 chart.marginLeft = 0;
                 chart.addListener("dataUpdated", zoomChart3);
 
@@ -646,8 +652,9 @@ function zoomChart2() {
                 categoryAxis.autoGridCount = false;
                 categoryAxis.gridCount = 8;
                 categoryAxis.gridAlpha = 0.1;
-                categoryAxis.gridColor = "#FFFFFF";
+                categoryAxis.gridColor = "#161616";
                 categoryAxis.axisColor = "#555555";
+                categoryAxis.fillColor = "#161616";
                 // we want custom date formatting, so we change it in next line
                 categoryAxis.dateFormats = [{
                     period: 'DD',
@@ -692,7 +699,7 @@ function zoomChart2() {
                 checkGraph.balloonText = "[[value]]";
                 checkGraph.legendValueText = ": [[value]]";
                 checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#263138";
+                checkGraph.lineColor = "#ED5565";
                 checkGraph.alphaField = "alpha";
                 chart.addGraph(checkGraph);
 
@@ -706,7 +713,7 @@ function zoomChart2() {
                 gatherGraph.balloonText = "[[value]]";
                 gatherGraph.legendValueText = ": [[value]]";
                 gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#333520";
+                gatherGraph.lineColor = "#4FC1E9";
                 gatherGraph.alphaField = "alpha";
                 chart.addGraph(gatherGraph);
 
@@ -720,7 +727,7 @@ function zoomChart2() {
                 investGraph.balloonText = "[[value]]";
                 investGraph.legendValueText = ": [[value]]";
                 investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#382626";
+                investGraph.lineColor = "#48CFAD";
                 investGraph.alphaField = "alpha";
                 chart.addGraph(investGraph);
 
@@ -774,7 +781,7 @@ function zoomChart2() {
                 legend.equalWidths = false;
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
-                legend.color = "#FFFFFF";
+                legend.color = "#161616";
                 chart.addLegend(legend);
 
                 // WRITE
@@ -801,6 +808,7 @@ function zoomChart3() {
       <section id="home" class="pfblock-image screen-height">
           <div class="home-overlay"></div>
           <div class="intro">
+
              <h1>POLICATION VR</h1>
              <div class="start">Criminal Profiling Training and Assessment System</div>
          </div>
@@ -856,31 +864,39 @@ function zoomChart3() {
 <!-- Services start -->
 
 <section id="search" class="pfblock pfblock">
+
   <div class="container">
      <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
            <div class="pfblock-header wow fadeInUp">
-              <h2 class="pfblock-title">About me</h2>
+
+              <h2 class="pfblock-title" style="text-transform: capitalize;">Search Your E-mail</h2>
               <div class="pfblock-line"></div>
               <div class="pfblock-subtitle">
-                 Hanseob Kim(1994), Aiden<br>
-                 Department of Computer Engineering, Chosun University<br>
-                 Visual computing laboratory member<br>
-             </div>
-         </div>
+                 <form action="http://localhost/" method="post">
+                  <input id="uri" type="search" name="schmail" />
+                  <input type="submit" value="전송" />
+              </form>
+          </div>
+      </div>
 
-     </div>
+  </div>
 
- </div>
+</div>
+
+
 </div><!-- .row -->
+</div><!-- .container -->
 </section>
 
 <!-- Services end -->
 
 <!-- Portfolio start -->
 
+
 <section id="score" class="pfblock pfblock-gray">
 	<div class="container">
+
 		<div class="row">
 
 			<div class="col-sm-6 col-sm-offset-3">
@@ -888,17 +904,14 @@ function zoomChart3() {
 				<div class="pfblock-header wow fadeInUp">
 					<h2 class="pfblock-title">My works</h2>
 					<div class="pfblock-line"></div>
-                    <div class="container fadeInRight" id="chartcase1div" style="height:400px;"></div>
-                    <div class="container fadeInUp" id="chartcase2div" style="height:400px;"></div>
-                    <div class="container fadeInUp" id="chartcase3div" style="height:400px;"></div>
+                    <div id="chartcase1div" style="height:400px;"></div>
+                    <div id="chartcase2div" style="height:400px;"></div>
+                    <div id="chartcase3div" style="height:400px;"></div>
                 </div>
 
             </div>
 
         </div><!-- .row -->
-
-
-
 
 
     </div><!-- .contaier -->
@@ -1018,12 +1031,11 @@ function zoomChart3() {
                             Github &nbsp&nbsp<a href="https://github.com/khseob0715" >
                             https://github.com/khseob0715</a><br>
                             알고리즘 <a href="https://www.acmicpc.net/user/khseob0715" >
-                          
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 </section>
 
