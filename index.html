@@ -15,20 +15,14 @@
 	<link href="assets/css/animate.css" rel="stylesheet">
 
 	<!-- Custom styles CSS -->
-	<link href="assets/css/style.css" rel="stylesheet" media="screen">
+	<link href="assets/css/style.css?ver=0.5" rel="stylesheet" media="screen">
 
-<<<<<<< HEAD
-    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
-=======
->>>>>>> 39e6c25c17f7cecbc9d1f393de016d81a0f71241
-	
 	<!-- amchart -->
 	<script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
     <script src="assets/amcharts/serial.js" type="text/javascript"></script>
 
     <!-- search -->
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
     <style type="text/css">
 
@@ -872,28 +866,21 @@ function zoomChart3() {
 
 <section id="search" class="pfblock pfblock">
 
-  <div class="container">
-     <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-           <div class="pfblock-header wow fadeInUp">
-
-              <h2 class="pfblock-title" style="text-transform: capitalize;">Search Your E-mail</h2>
-              <div class="pfblock-line"></div>
-              <div class="pfblock-subtitle">
-                 <form action="http://localhost/" method="post">
-                  <input id="uri" type="search" name="schmail" />
-                  <input type="submit" value="전송" />
-              </form>
-          </div>
-      </div>
-
-  </div>
-
+    <div class="col-sm-6 col-sm-offset-3">
+       <div class="pfblock-header wow fadeInUp"></div>
+       <form action="http://localhost/" method="post" autocomplete="off">
+        <fieldset class="url">
+          <input id="url" type="text" name="schmail" required>
+          <label for="url"><i class="fa fa-search" aria-hidden="true"></i> Search</label>
+          <div class="after"></div>
+      </fieldset>
+      <fieldset class="enter">
+          <button></button>
+      </fieldset>
+  </form>
+</div>
 </div>
 
-
-</div><!-- .row -->
-</div><!-- .container -->
 </section>
 
 <!-- Services end -->
@@ -902,26 +889,23 @@ function zoomChart3() {
 
 
 <section id="score" class="pfblock pfblock-gray">
-	<div class="container">
 
-		<div class="row">
+  <div class="row">
 
-			<div class="col-sm-6 col-sm-offset-3">
+   <div class="col-sm-6 col-sm-offset-3">
 
-				<div class="pfblock-header wow fadeInUp">
-					<h2 class="pfblock-title">My works</h2>
-					<div class="pfblock-line"></div>
-                    <div id="chartcase1div" style="height:400px;"></div>
-                    <div id="chartcase2div" style="height:400px;"></div>
-                    <div id="chartcase3div" style="height:400px;"></div>
-                </div>
+    <div class="pfblock-header wow fadeInUp">
+     <h2 class="pfblock-title">My Score Chart</h2>
+     <div class="pfblock-line"></div>
+     <div id="chartcase1div" style="height:400px;"></div>
+     <div id="chartcase2div" style="height:400px;"></div>
+     <div id="chartcase3div" style="height:400px;"></div>
+ </div>
 
-            </div>
+</div>
 
-        </div><!-- .row -->
+</div><!-- .row -->
 
-
-    </div><!-- .contaier -->
 
 </section>
 
@@ -967,7 +951,7 @@ function zoomChart3() {
                         <div class="iconbox-desc" align="left" >
                             2016 청년취업아카데미 IoT 융합프로젝트 최우수상<br>
                             2016 학생 자율 팀프로젝트(드론) 우수상<br>
-                         
+
                         </div>
                     </div>
                 </div>
@@ -985,7 +969,7 @@ function zoomChart3() {
                         <div class="iconbox-desc" align="left">
                             2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
                             2018 Qualcomm Institute Project 수료<br>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -1002,7 +986,7 @@ function zoomChart3() {
                         <div class="iconbox-desc" align="left">
                             2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
                             2018 Qualcomm Institute Project 수료<br>
-                        
+
                         </div>
                     </div>
                 </div>
@@ -1019,7 +1003,7 @@ function zoomChart3() {
                         <div class="iconbox-desc" align="left">
                             2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
                             2018 Qualcomm Institute Project 수료<br>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -1038,37 +1022,37 @@ function zoomChart3() {
                             Github &nbsp&nbsp<a href="https://github.com/khseob0715" >
                             https://github.com/khseob0715</a><br>
                             알고리즘 <a href="https://www.acmicpc.net/user/khseob0715" >
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </a>
-    </div>
-</section>
+            </a>
+        </div>
+    </section>
 
-<!-- Portfolio end -->
+    <!-- Portfolio end -->
 
-<!-- Skills start -->
+    <!-- Skills start -->
 
-<!-- Footer start -->
+    <!-- Footer start -->
 
-<footer id="footer">
-	<div class="container">
-		<div class="row">
+    <footer id="footer">
+     <div class="container">
+      <div class="row">
 
-           <div class="col-sm-12">
+       <div class="col-sm-12">
 
-            <p class="heart">
-               <span class="fa fa-heart fa-2x animated pulse"></span>					
-           </p>
-               <p class="copyright">
-                  © 2018 Aiden Kim
-              </p>
+        <p class="heart">
+           <span class="fa fa-heart fa-2x animated pulse"></span>					
+       </p>
+       <p class="copyright">
+          © 2018 Aiden Kim
+      </p>
 
-          </div>
+  </div>
 
-      </div><!-- .row -->
-  </div><!-- .container -->
+</div><!-- .row -->
+</div><!-- .container -->
 </footer>
 
 <!-- Footer end -->
@@ -1091,6 +1075,7 @@ function zoomChart3() {
 <script src="assets/js/waypoints.min.js"></script>
 <script src="assets/js/jquery.cbpQTRotator.js"></script>
 <script src="assets/js/custom.js"></script>
+<script src="assets/search/index.js"></script>
 
 
 <!-- Scroll to top end-->
