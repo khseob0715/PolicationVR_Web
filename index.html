@@ -19,172 +19,169 @@
 	<link href="assets/devicons/css/devicons.min.css" rel="stylesheet">
 
 	<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
-
-	
-
 	
 	<!-- amchart -->
 	<script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
     <script src="assets/amcharts/serial.js" type="text/javascript"></script>
-        
-
-        <style type="text/css">
-
-            .amcharts-graph-g1 .amcharts-graph-stroke {
-                stroke-dasharray: 3px 3px;
-                stroke-linejoin: round;
-                stroke-linecap: round;
-                -webkit-animation: am-moving-dashes 1s linear infinite;
-                animation: am-moving-dashes 1s linear infinite;
-            }
-
-            @-webkit-keyframes am-moving-dashes {
-                100% {
-                    stroke-dashoffset: -30px;
-                }
-            }
-            @keyframes am-moving-dashes {
-                100% {
-                    stroke-dashoffset: -30px;
-                }
-            }
 
 
-            .lastBullet {
-                -webkit-animation: am-pulsating 1s ease-out infinite;
-                animation: am-pulsating 1s ease-out infinite;
-            }
-            @-webkit-keyframes am-pulsating {
-                0% {
-                    stroke-opacity: 1;
-                    stroke-width: 0px;
-                }
-                100% {
-                    stroke-opacity: 0;
-                    stroke-width: 50px;
-                }
-            }
-            @keyframes am-pulsating {
-                0% {
-                    stroke-opacity: 1;
-                    stroke-width: 0px;
-                }
-                100% {
-                    stroke-opacity: 0;
-                    stroke-width: 50px;
-                }
-            }
+    <style type="text/css">
 
-            .amcharts-graph-column-front {
-                -webkit-transition: all .3s .3s ease-out;
-                transition: all .3s .3s ease-out;
-            }
-            .amcharts-graph-column-front:hover {
-                fill: #496375;
-                stroke: #496375;
-                -webkit-transition: all .3s ease-out;
-                transition: all .3s ease-out;
-            }
+    .amcharts-graph-g1 .amcharts-graph-stroke {
+        stroke-dasharray: 3px 3px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        -webkit-animation: am-moving-dashes 1s linear infinite;
+        animation: am-moving-dashes 1s linear infinite;
+    }
+
+    @-webkit-keyframes am-moving-dashes {
+        100% {
+            stroke-dashoffset: -30px;
+        }
+    }
+    @keyframes am-moving-dashes {
+        100% {
+            stroke-dashoffset: -30px;
+        }
+    }
 
 
-            .amcharts-graph-g2 {
-              stroke-linejoin: round;
-              stroke-linecap: round;
-              stroke-dasharray: 500%;
-              stroke-dasharray: 0 \0/;    /* fixes IE prob */
-              stroke-dashoffset: 0 \0/;   /* fixes IE prob */
-              -webkit-animation: am-draw 40s;
-              animation: am-draw 40s;
-            }
-            @-webkit-keyframes am-draw {
-                0% {
-                    stroke-dashoffset: 500%;
-                }
-                100% {
-                    stroke-dashoffset: 0px;
-                }
-            }
-            @keyframes am-draw {
-                0% {
-                    stroke-dashoffset: 500%;
-                }
-                100% {
-                    stroke-dashoffset: 0px;
-                }
-            }
+    .lastBullet {
+        -webkit-animation: am-pulsating 1s ease-out infinite;
+        animation: am-pulsating 1s ease-out infinite;
+    }
+    @-webkit-keyframes am-pulsating {
+        0% {
+            stroke-opacity: 1;
+            stroke-width: 0px;
+        }
+        100% {
+            stroke-opacity: 0;
+            stroke-width: 50px;
+        }
+    }
+    @keyframes am-pulsating {
+        0% {
+            stroke-opacity: 1;
+            stroke-width: 0px;
+        }
+        100% {
+            stroke-opacity: 0;
+            stroke-width: 50px;
+        }
+    }
+
+    .amcharts-graph-column-front {
+        -webkit-transition: all .3s .3s ease-out;
+        transition: all .3s .3s ease-out;
+    }
+    .amcharts-graph-column-front:hover {
+        fill: #496375;
+        stroke: #496375;
+        -webkit-transition: all .3s ease-out;
+        transition: all .3s ease-out;
+    }
+
+
+    .amcharts-graph-g2 {
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      stroke-dasharray: 500%;
+      stroke-dasharray: 0 \0/;    /* fixes IE prob */
+      stroke-dashoffset: 0 \0/;   /* fixes IE prob */
+      -webkit-animation: am-draw 40s;
+      animation: am-draw 40s;
+  }
+  @-webkit-keyframes am-draw {
+    0% {
+        stroke-dashoffset: 500%;
+    }
+    100% {
+        stroke-dashoffset: 0px;
+    }
+}
+@keyframes am-draw {
+    0% {
+        stroke-dashoffset: 500%;
+    }
+    100% {
+        stroke-dashoffset: 0px;
+    }
+}
 
 
 
 
-        </style>
+</style>
 
-         <?php
+<?php
 
-            $hostname = "127.0.0.1";
-            $username= "root";   
-            $password = "q56125612";
-            $dbname = "userinfo";
+$hostname = "127.0.0.1";
+$username= "root";   
+$password = "q56125612";
+$dbname = "userinfo";
 
-            $mysqli = new mysqli($hostname, $username, $password, $dbname); 
+$mysqli = new mysqli($hostname, $username, $password, $dbname); 
 
-            $Uemail = $_REQUEST["schmail"];
-  
-            $user = "SELECT * FROM user WHERE User_email = '$Uemail'";
-            $userresult = mysqli_query($mysqli, $user);
-            $userrow = mysqli_fetch_array($userresult);
+$Uemail = $_REQUEST["schmail"];
 
-            $gradeseq = "SELECT * FROM grade WHERE User_sequence = 20 AND Test_Case = 1";
-            $gradeseqresult = mysqli_query($mysqli, $gradeseq);
-  
-            $nsd1 = mysqli_num_rows($gradeseqresult);
+$user = "SELECT * FROM user WHERE User_email = '$Uemail'";
+$userresult = mysqli_query($mysqli, $user);
+$userrow = mysqli_fetch_array($userresult);
 
-            $n=0;
+$gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 1";
+$gradeseqresult = mysqli_query($mysqli, $gradeseq);
 
-            while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
-                $Test_date1[$n] = $gradeseqrow['Test_date'];
-                $sub_check1[$n] = $gradeseqrow['sub_check'];
-                $sub_gather1[$n] = $gradeseqrow['sub_gather'];
-                $sub_invest1[$n] = $gradeseqrow['sub_invest'];
-                $n++;
-            }
+$nsd1 = mysqli_num_rows($gradeseqresult);
 
-            $n = 0;
+$n=0;
 
-            $gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 2";
-            $gradeseqresult = mysqli_query($mysqli, $gradeseq);
-  
-            $nsd2 = mysqli_num_rows($gradeseqresult);
+while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
+$Test_date1[$n] = $gradeseqrow['Test_date'];
+$sub_check1[$n] = $gradeseqrow['sub_check'];
+$sub_gather1[$n] = $gradeseqrow['sub_gather'];
+$sub_invest1[$n] = $gradeseqrow['sub_invest'];
+$n++;
+}
 
-            while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
-                $Test_date2[$n] = $gradeseqrow['Test_date'];
-                $sub_check2[$n] = $gradeseqrow['sub_check'];
-                $sub_gather2[$n] = $gradeseqrow['sub_gather'];
-                $sub_invest2[$n] = $gradeseqrow['sub_invest'];
-                $n++;
-            }
+$n = 0;
 
-            $n = 0;
+$gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 2";
+$gradeseqresult = mysqli_query($mysqli, $gradeseq);
 
-            $gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 3";
-            $gradeseqresult = mysqli_query($mysqli, $gradeseq);
-  
-            $nsd3 = mysqli_num_rows($gradeseqresult);
+$nsd2 = mysqli_num_rows($gradeseqresult);
 
-            while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
-                $Test_date3[$n] = $gradeseqrow['Test_date'];
-                $sub_check3[$n] = $gradeseqrow['sub_check'];
-                $sub_gather3[$n] = $gradeseqrow['sub_gather'];
-                $sub_invest3[$n] = $gradeseqrow['sub_invest'];
-                $n++;
-            }
+while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
+$Test_date2[$n] = $gradeseqrow['Test_date'];
+$sub_check2[$n] = $gradeseqrow['sub_check'];
+$sub_gather2[$n] = $gradeseqrow['sub_gather'];
+$sub_invest2[$n] = $gradeseqrow['sub_invest'];
+$n++;
+}
 
-            mysqli_free_result($userresult);
-            mysqli_free_result($gradeseqresult);
-            mysqli_close($mysqli);
-        
-        ?>
+$n = 0;
 
-        <script>
+$gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 3";
+$gradeseqresult = mysqli_query($mysqli, $gradeseq);
+
+$nsd3 = mysqli_num_rows($gradeseqresult);
+
+while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
+$Test_date3[$n] = $gradeseqrow['Test_date'];
+$sub_check3[$n] = $gradeseqrow['sub_check'];
+$sub_gather3[$n] = $gradeseqrow['sub_gather'];
+$sub_invest3[$n] = $gradeseqrow['sub_invest'];
+$n++;
+}
+
+mysqli_free_result($userresult);
+mysqli_free_result($gradeseqresult);
+mysqli_close($mysqli);
+
+?>
+
+<script>
             // note, we have townName field with a name specified for each datapoint and townName2 with only some of the names specified.
             // we use townName2 to display town names next to the bullet. And as these names would overlap if displayed next to each bullet,
             // we created this townName2 field and set only some of the names for this purpse
@@ -200,24 +197,24 @@
             var n = <?php echo $nsd1 ?>*1;
 
             var chartData1 = [
-                {
-                    "date": Test_date[0],
-                    "Check": sub_check[0]*1,
-                    "Gather": sub_gather[0]*1,
-                    "Invest": sub_invest[0]*1,
-                    "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
-                }
+            {
+                "date": Test_date[0],
+                "Check": sub_check[0]*1,
+                "Gather": sub_gather[0]*1,
+                "Invest": sub_invest[0]*1,
+                "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
+            }
             ];
 
             for(var i = 1; i<n; i++){
                 var tmpdata1 = [
-                    {
+                {
                     "date": Test_date[i],
                     "Check": sub_check[i]*1,
                     "Gather": sub_gather[i]*1,
                     "Invest": sub_invest[i]*1,
                     "Average": (sub_check[i]*1+sub_gather[i]*1+sub_invest[i]*1)/3
-                    }
+                }
                 ];
 
                 chartData1 = chartData1.concat(tmpdata1);
@@ -228,13 +225,13 @@
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("Case 1", 24);
+                chart.addTitle("CrimeScene 01", 24);
                 chart.addClassNames = true;
                 chart.dataProvider = chartData1;
                 chart.categoryField = "date";
                 chart.dataDateFormat = "YYYY-MM-DD";
                 chart.startDuration = 1;
-                chart.color = "#FFFFFF";
+                chart.color = "#161616";
                 chart.marginLeft = 0;
                 chart.addListener("dataUpdated", zoomChart1);
 
@@ -246,8 +243,9 @@
                 categoryAxis.autoGridCount = false;
                 categoryAxis.gridCount = 8;
                 categoryAxis.gridAlpha = 0.1;
-                categoryAxis.gridColor = "#FFFFFF";
+                categoryAxis.gridColor = "#161616";
                 categoryAxis.axisColor = "#555555";
+                categoryAxis.fillColor = "#161616";
                 // we want custom date formatting, so we change it in next line
                 categoryAxis.dateFormats = [{
                     period: 'DD',
@@ -270,6 +268,7 @@
                 scoreAxis.title = "Score";
                 scoreAxis.gridAlpha = 0;
                 scoreAxis.axisAlpha = 0;
+                scoreAxis.color = "#161616";
                 chart.addValueAxis(scoreAxis);
 
                 var averageAxis = new AmCharts.ValueAxis();
@@ -277,6 +276,7 @@
                 averageAxis.gridAlpha = 0;
                 averageAxis.axisAlpha = 0;
                 averageAxis.inside = false;
+                averageAxis.color = "#161616";
                 averageAxis.position = "right";
                 chart.addValueAxis(averageAxis);
 
@@ -292,7 +292,7 @@
                 checkGraph.balloonText = "[[value]]";
                 checkGraph.legendValueText = ": [[value]]";
                 checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#263138";
+                checkGraph.lineColor = "#ED5565";
                 checkGraph.alphaField = "alpha";
                 chart.addGraph(checkGraph);
 
@@ -306,7 +306,7 @@
                 gatherGraph.balloonText = "[[value]]";
                 gatherGraph.legendValueText = ": [[value]]";
                 gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#333520";
+                gatherGraph.lineColor = "#4FC1E9";
                 gatherGraph.alphaField = "alpha";
                 chart.addGraph(gatherGraph);
 
@@ -320,7 +320,7 @@
                 investGraph.balloonText = "[[value]]";
                 investGraph.legendValueText = ": [[value]]";
                 investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#382626";
+                investGraph.lineColor = "#48CFAD";
                 investGraph.alphaField = "alpha";
                 chart.addGraph(investGraph);
 
@@ -374,14 +374,14 @@
                 legend.equalWidths = false;
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
-                legend.color = "#FFFFFF";
+                legend.color = "#161616";
                 chart.addLegend(legend);
 
                 // WRITE
                 chart.write("chartcase1div");
             });
 
-            function zoomChart1() {
+function zoomChart1() {
                 // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
                 chart.zoomToIndexes(chartData1.length - 8, chartData1.length - 1);
             }
@@ -403,24 +403,24 @@
             var n = <?php echo $nsd2 ?>*1;
 
             var chartData2 = [
-                {
-                    "date": Test_date[0],
-                    "Check": sub_check[0]*1,
-                    "Gather": sub_gather[0]*1,
-                    "Invest": sub_invest[0]*1,
-                    "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
-                }
+            {
+                "date": Test_date[0],
+                "Check": sub_check[0]*1,
+                "Gather": sub_gather[0]*1,
+                "Invest": sub_invest[0]*1,
+                "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
+            }
             ];
 
             for(var i = 1; i<n; i++){
                 var tmpdata2 = [
-                    {
+                {
                     "date": Test_date[i],
                     "Check": sub_check[i]*1,
                     "Gather": sub_gather[i]*1,
                     "Invest": sub_invest[i]*1,
                     "Average": (sub_check[i]*1+sub_gather[i]*1+sub_invest[i]*1)/3
-                    }
+                }
                 ];
 
                 chartData2 = chartData2.concat(tmpdata2);
@@ -431,13 +431,13 @@
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("Case 2", 24);
+                chart.addTitle("CrimeScene 02", 24);
                 chart.addClassNames = true;
                 chart.dataProvider = chartData2;
                 chart.categoryField = "date";
                 chart.dataDateFormat = "YYYY-MM-DD";
                 chart.startDuration = 1;
-                chart.color = "#FFFFFF";
+                chart.color = "#161616";
                 chart.marginLeft = 0;
                 chart.addListener("dataUpdated", zoomChart2);
 
@@ -449,8 +449,9 @@
                 categoryAxis.autoGridCount = false;
                 categoryAxis.gridCount = 8;
                 categoryAxis.gridAlpha = 0.1;
-                categoryAxis.gridColor = "#FFFFFF";
+                categoryAxis.gridColor = "#161616";
                 categoryAxis.axisColor = "#555555";
+                categoryAxis.fillColor = "#161616";
                 // we want custom date formatting, so we change it in next line
                 categoryAxis.dateFormats = [{
                     period: 'DD',
@@ -495,7 +496,7 @@
                 checkGraph.balloonText = "[[value]]";
                 checkGraph.legendValueText = ": [[value]]";
                 checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#263138";
+                checkGraph.lineColor = "#ED5565";
                 checkGraph.alphaField = "alpha";
                 chart.addGraph(checkGraph);
 
@@ -509,7 +510,7 @@
                 gatherGraph.balloonText = "[[value]]";
                 gatherGraph.legendValueText = ": [[value]]";
                 gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#333520";
+                gatherGraph.lineColor = "#4FC1E9";
                 gatherGraph.alphaField = "alpha";
                 chart.addGraph(gatherGraph);
 
@@ -523,7 +524,7 @@
                 investGraph.balloonText = "[[value]]";
                 investGraph.legendValueText = ": [[value]]";
                 investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#382626";
+                investGraph.lineColor = "#48CFAD";
                 investGraph.alphaField = "alpha";
                 chart.addGraph(investGraph);
 
@@ -569,6 +570,7 @@
                 chartCursor.valueLineBalloonEnabled = true;
                 chartCursor.valueLineEnabled = true;
                 chartCursor.valueLineAlpha = 0.5;
+
                 chart.addChartCursor(chartCursor);
 
                 // LEGEND
@@ -577,14 +579,14 @@
                 legend.equalWidths = false;
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
-                legend.color = "#FFFFFF";
+                legend.color = "#161616";
                 chart.addLegend(legend);
 
                 // WRITE
                 chart.write("chartcase2div");
             });
 
-            function zoomChart2() {
+function zoomChart2() {
                 // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
                 chart.zoomToIndexes(chartData2.length - 8, chartData2.length - 1);
             }
@@ -606,24 +608,24 @@
             var n = <?php echo $nsd3 ?>*1;
 
             var chartData3 = [
-                {
-                    "date": Test_date[0],
-                    "Check": sub_check[0]*1,
-                    "Gather": sub_gather[0]*1,
-                    "Invest": sub_invest[0]*1,
-                    "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
-                }
+            {
+                "date": Test_date[0],
+                "Check": sub_check[0]*1,
+                "Gather": sub_gather[0]*1,
+                "Invest": sub_invest[0]*1,
+                "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
+            }
             ];
 
             for(var i = 1; i<n; i++){
                 var tmpdata3 = [
-                    {
+                {
                     "date": Test_date[i],
                     "Check": sub_check[i]*1,
                     "Gather": sub_gather[i]*1,
                     "Invest": sub_invest[i]*1,
                     "Average": (sub_check[i]*1+sub_gather[i]*1+sub_invest[i]*1)/3
-                    }
+                }
                 ];
 
                 chartData3 = chartData3.concat(tmpdata3);
@@ -634,13 +636,13 @@
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("Case 3", 24);
+                chart.addTitle("CrimScene 03", 24);
                 chart.addClassNames = true;
                 chart.dataProvider = chartData3;
                 chart.categoryField = "date";
                 chart.dataDateFormat = "YYYY-MM-DD";
                 chart.startDuration = 1;
-                chart.color = "#FFFFFF";
+                chart.color = "#161616";
                 chart.marginLeft = 0;
                 chart.addListener("dataUpdated", zoomChart3);
 
@@ -652,8 +654,9 @@
                 categoryAxis.autoGridCount = false;
                 categoryAxis.gridCount = 8;
                 categoryAxis.gridAlpha = 0.1;
-                categoryAxis.gridColor = "#FFFFFF";
+                categoryAxis.gridColor = "#161616";
                 categoryAxis.axisColor = "#555555";
+                categoryAxis.fillColor = "#161616";
                 // we want custom date formatting, so we change it in next line
                 categoryAxis.dateFormats = [{
                     period: 'DD',
@@ -698,7 +701,7 @@
                 checkGraph.balloonText = "[[value]]";
                 checkGraph.legendValueText = ": [[value]]";
                 checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#263138";
+                checkGraph.lineColor = "#ED5565";
                 checkGraph.alphaField = "alpha";
                 chart.addGraph(checkGraph);
 
@@ -712,7 +715,7 @@
                 gatherGraph.balloonText = "[[value]]";
                 gatherGraph.legendValueText = ": [[value]]";
                 gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#333520";
+                gatherGraph.lineColor = "#4FC1E9";
                 gatherGraph.alphaField = "alpha";
                 chart.addGraph(gatherGraph);
 
@@ -726,7 +729,7 @@
                 investGraph.balloonText = "[[value]]";
                 investGraph.legendValueText = ": [[value]]";
                 investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#382626";
+                investGraph.lineColor = "#48CFAD";
                 investGraph.alphaField = "alpha";
                 chart.addGraph(investGraph);
 
@@ -780,109 +783,110 @@
                 legend.equalWidths = false;
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
-                legend.color = "#FFFFFF";
+                legend.color = "#161616";
                 chart.addLegend(legend);
 
                 // WRITE
                 chart.write("chartcase3div");
             });
 
-            function zoomChart3() {
+function zoomChart3() {
                 // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
                 chart.zoomToIndexes(chartData3.length - 8, chartData3.length - 1);
             }
 
         </script>
-</head>
-<body>
+    </head>
+    <body>
 
-	<!-- Preloader -->
+       <!-- Preloader -->
 
-	<div id="preloader">
-		<div id="status"></div>
-	</div>
+       <div id="preloader">
+          <div id="status"></div>
+      </div>
 
-	<!-- Home start -->
+      <!-- Home start -->
 
-	<section id="home" class="pfblock-image screen-height">
-		<div class="home-overlay"></div>
-		<div class="intro">
-			<div class="start">Hm and I am</div>
-			<h1>Full Stack Developer</h1>
-			<div class="start">I'll never give over dreaming about the future</div>
-		</div>
+      <section id="home" class="pfblock-image screen-height">
+          <div class="home-overlay"></div>
+          <div class="intro">
+             <div class="start">creative TeamKim</div>
+             <h1>Polication VR</h1>
+             <div class="start">Enter your email address and check your score</div>
+         </div>
 
-		<a href="#services">
-			<div class="scroll-down">
-				<span>
-					<i class="fa fa-angle-down fa-2x"></i>
-				</span>
-			</div>
-		</a>
+         <a href="#services">
+             <div class="scroll-down">
+                <span>
+                   <i class="fa fa-angle-down fa-2x"></i>
+               </span>
+           </div>
+       </a>
 
-	</section>
+   </section>
 
-	<!-- Home end -->
+   <!-- Home end -->
 
-	<!-- Navigation start -->
+   <!-- Navigation start -->
 
-	<header class="header">
+   <header class="header">
 
-		<nav class="navbar navbar-custom" role="navigation">
+      <nav class="navbar navbar-custom" role="navigation">
 
-			<div class="container">
+         <div class="container">
 
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="index.html" style="text-transform: capitalize;">Polication VR</a>
-				</div>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="index.html" style="text-transform: capitalize;">Polication VR</a>
+          </div>
 
-				<div class="collapse navbar-collapse" id="custom-collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#home">Main</a></li>
-						<li><a href="#services">Search</a></li>
-						<li><a href="#portfolio">Chart</a></li>
-						<li><a href="#skills">Project</a></li>
-						<li><a href="#contact">WHOAMI</a></li>
-					</ul>
-				</div>
+          <div class="collapse navbar-collapse" id="custom-collapse">
+           <ul class="nav navbar-nav navbar-right">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#search">Search</a></li>
+              <li><a href="#score">Score</a></li>
+              <li><a href="#project">Project</a></li>
+              <li><a href="#whoami">WHOAMI</a></li>
+          </ul>
+      </div>
 
-			</div><!-- .container -->
+  </div><!-- .container -->
 
-		</nav>
+</nav>
 
-	</header>
+</header>
 
-	<!-- Navigation end -->
+<!-- Navigation end -->
 
-	<!-- Services start -->
+<!-- Services start -->
 
-	<section id="services" class="pfblock pfblock">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div class="pfblock-header wow fadeInUp">
-						<h2 class="pfblock-title">About me</h2>
-						<div class="pfblock-line"></div>
-						<div class="pfblock-subtitle">
-							Hanseob Kim(1994), Aiden<br>
-							Department of Computer Engineering, Chosun University<br>
-							Visual computing laboratory member<br>
-						</div>
-					</div>
+<section id="services" class="pfblock pfblock">
+  <div class="container">
+     <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+           <div class="pfblock-header wow fadeInUp">
+              <h2 class="pfblock-title" style="text-transform: capitalize;">Search Your E-mail</h2>
+              <div class="pfblock-line"></div>
+              <div class="pfblock-subtitle">
+                 <form action="http://localhost/" method="post">
+                  <input id="uri" type="search" name="schmail" />
+                  <input type="submit" value="전송" />
+              </form>
+          </div>
+      </div>
 
-				</div>
+  </div>
 
-			</div>
-			
+</div>
 
-		</div><!-- .row -->
-	</div><!-- .container -->
+
+</div><!-- .row -->
+</div><!-- .container -->
 </section>
 
 <!-- Services end -->
@@ -890,7 +894,7 @@
 <!-- Portfolio start -->
 
 <section id="portfolio" class="pfblock pfblock-gray">
-	<div class="container">
+	
 		<div class="row">
 
 			<div class="col-sm-6 col-sm-offset-3">
@@ -898,20 +902,15 @@
 				<div class="pfblock-header wow fadeInUp">
 					<h2 class="pfblock-title">My works</h2>
 					<div class="pfblock-line"></div>
-					   <div class="container fadeInRight" id="chartcase1div" style="height:400px;"></div>
-                        <div class="container fadeInUp" id="chartcase2div" style="height:400px;"></div>
-                        <div class="container fadeInUp" id="chartcase3div" style="height:400px;"></div>
-				</div>
+                    <div id="chartcase1div" style="height:400px;"></div>
+                    <div id="chartcase2div" style="height:400px;"></div>
+                    <div id="chartcase3div" style="height:400px;"></div>
+                </div>
 
-			</div>
+            </div>
 
-		</div><!-- .row -->
+        </div><!-- .row -->
 
-
-		
-
-
-	</div><!-- .contaier -->
 
 </section>
 
@@ -934,160 +933,160 @@
 
                 <div class="row">
 
-            <a href="introduction.html">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="grid wow zoomIn">
-                        <figure class="effect-bubba">
-                            <img src="assets/images/item-4.jpg" alt="img01"/>
-                            <figcaption>
-                                <h2>detailed<span>  introduction</span></h2>
-                                <p>check of content<br>'about me'</p>
-                            </figcaption>           
-                        </figure>
-                    </div>
-                </div>
-            </a>
-
-            <a href="android.html">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="grid wow zoomIn">
-                        <figure class="effect-bubba">
-                            <img src="assets/images/item-1.jpg" alt="img01"/>
-                            <figcaption>
-                                <h2>Android<span> Application</span></h2>
-                                <p>Various experience and<br>stylish design</p>
-                            </figcaption>           
-                        </figure>
-                    </div>
-                </div>
-            </a>
-
-            <a href="iot.html">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="grid wow zoomIn">
-                        <figure class="effect-bubba">
-                            <img src="assets/images/item-2.jpg" alt="img01"/>
-                            <figcaption>
-                                <h2>Internet of <span>Things</span></h2>
-                                <p>various contents development Challenge</p>
-                            </figcaption>           
-                        </figure>
-                    </div>
-
-                </div>
-            </a>
-            <a href="virtual.html">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="grid wow zoomIn">
-                        <figure class="effect-bubba">
-                            <img src="assets/images/item-3.jpg" alt="img01"/>
-                            <figcaption>
-                                <h2><span>Virtual Reality</span></h2>
-                                <p>Making a world <br>we haven't experienced</p>
-                            </figcaption>           
-                        </figure>
-                    </div>
-                </div>
-            </a>
-            <a href="otherdev.html">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-
-                    <div class="grid wow zoomIn">
-                        <figure class="effect-bubba">
-                            <img src="assets/images/item-6.jpg" alt="img01"/>
-                            <figcaption>
-                                <h2>others<span> development</span></h2>
-                                <p>I know how to develop various fields</p>
-                            </figcaption>           
-                        </figure>
-                    </div>
-
-                </div>
-            </a>
-            <a href="activities.html">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-
-                    <div class="grid wow zoomIn">
-                        <figure class="effect-bubba">
-                            <img src="assets/images/item-5.jpg" alt="img01"/>
-                            <figcaption>
-                                <h2>In & External<span> activities</span></h2>
-                                <p>overseas study, contests and volunteering</p>
-                            </figcaption>           
-                        </figure>
-                    </div>
-
-                </div>
-            </a>
-
-
-            <div class="row">
-
-                <div class="col-sm-4">
-                    <div class="iconbox wow slideInLeft" style="height: 350px">
-                        <div class="iconbox-icon">
-                            <span class="icon-puzzle"></span>
+                    <a href="introduction.html">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="grid wow zoomIn">
+                                <figure class="effect-bubba">
+                                    <img src="assets/images/item-4.jpg" alt="img01"/>
+                                    <figcaption>
+                                        <h2>detailed<span>  introduction</span></h2>
+                                        <p>check of content<br>'about me'</p>
+                                    </figcaption>           
+                                </figure>
+                            </div>
                         </div>
-                        <div class="iconbox-text">
-                            <h3 class="iconbox-title">Award</h3>
-                            <div class="iconbox-desc" align="left" >
-                                2016 청년취업아카데미 IoT 융합프로젝트 최우수상<br>
-                                2016 학생 자율 팀프로젝트(드론) 우수상<br>
-                                2016 입사목표 기업분석 공모전(PPT) 대상<br>
-                                2017 소프트웨어 중심대학 오픈소스 해커톤 특별상<br>
-                                2017 SW 융합기술 해커톤 동상<br>
-                                2017 교내 종합학술대회 학술발표 금상<br>
-                                2018 Qualcomm Institute Project Best Team 수상
+                    </a>
+
+                    <a href="android.html">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="grid wow zoomIn">
+                                <figure class="effect-bubba">
+                                    <img src="assets/images/item-1.jpg" alt="img01"/>
+                                    <figcaption>
+                                        <h2>Android<span> Application</span></h2>
+                                        <p>Various experience and<br>stylish design</p>
+                                    </figcaption>           
+                                </figure>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="iot.html">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="grid wow zoomIn">
+                                <figure class="effect-bubba">
+                                    <img src="assets/images/item-2.jpg" alt="img01"/>
+                                    <figcaption>
+                                        <h2>Internet of <span>Things</span></h2>
+                                        <p>various contents development Challenge</p>
+                                    </figcaption>           
+                                </figure>
+                            </div>
+
+                        </div>
+                    </a>
+                    <a href="virtual.html">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="grid wow zoomIn">
+                                <figure class="effect-bubba">
+                                    <img src="assets/images/item-3.jpg" alt="img01"/>
+                                    <figcaption>
+                                        <h2><span>Virtual Reality</span></h2>
+                                        <p>Making a world <br>we haven't experienced</p>
+                                    </figcaption>           
+                                </figure>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="otherdev.html">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+
+                            <div class="grid wow zoomIn">
+                                <figure class="effect-bubba">
+                                    <img src="assets/images/item-6.jpg" alt="img01"/>
+                                    <figcaption>
+                                        <h2>others<span> development</span></h2>
+                                        <p>I know how to develop various fields</p>
+                                    </figcaption>           
+                                </figure>
+                            </div>
+
+                        </div>
+                    </a>
+                    <a href="activities.html">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+
+                            <div class="grid wow zoomIn">
+                                <figure class="effect-bubba">
+                                    <img src="assets/images/item-5.jpg" alt="img01"/>
+                                    <figcaption>
+                                        <h2>In & External<span> activities</span></h2>
+                                        <p>overseas study, contests and volunteering</p>
+                                    </figcaption>           
+                                </figure>
+                            </div>
+
+                        </div>
+                    </a>
+
+
+                    <div class="row">
+
+                        <div class="col-sm-4">
+                            <div class="iconbox wow slideInLeft" style="height: 350px">
+                                <div class="iconbox-icon">
+                                    <span class="icon-puzzle"></span>
+                                </div>
+                                <div class="iconbox-text">
+                                    <h3 class="iconbox-title">Award</h3>
+                                    <div class="iconbox-desc" align="left" >
+                                        2016 청년취업아카데미 IoT 융합프로젝트 최우수상<br>
+                                        2016 학생 자율 팀프로젝트(드론) 우수상<br>
+                                        2016 입사목표 기업분석 공모전(PPT) 대상<br>
+                                        2017 소프트웨어 중심대학 오픈소스 해커톤 특별상<br>
+                                        2017 SW 융합기술 해커톤 동상<br>
+                                        2017 교내 종합학술대회 학술발표 금상<br>
+                                        2018 Qualcomm Institute Project Best Team 수상
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-4">
+
+                            <div class="iconbox wow slideInUp" style="height: 350px">
+                                <div class="iconbox-icon">
+                                    <span class="icon-badge"></span>
+                                </div>
+                                <div class="iconbox-text">
+                                    <h3 class="iconbox-title">Certificate</h3>
+                                    <div class="iconbox-desc" align="left">
+                                        2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
+                                        2018 Qualcomm Institute Project 수료<br>
+                                        2014 워드프로세서 단일등급 취득<br>
+                                        2014 GTQ 그래픽 기술 1급 취득<br>
+                                        2016 컴퓨터활용 능력 1급 취득<br>
+                                        2018 정보처리기사 취득<br>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-4">
+
+                            <div class="iconbox wow slideInRight" style="height: 350px">
+                                <div class="iconbox-icon">
+                                    <span class="icon-question"></span>
+                                </div>
+                                <div class="iconbox-text">
+                                    <h3 class="iconbox-title">others</h3>
+                                    <div class="iconbox-desc"  align="left">
+                                        Github &nbsp&nbsp<a href="https://github.com/khseob0715" >
+                                        https://github.com/khseob0715</a><br>
+                                        알고리즘 <a href="https://www.acmicpc.net/user/khseob0715" >
+                                        https://www.acmicpc.net/user/khseob0715</a><br>
+                                        교내 프로그래밍 튜터(17.09.01~)<br>
+                                        육군 현역 정보보안병(14.05.27~16.02.26)<br>
+                                        담양군청 지역경제과 행정인턴(14.01.02~02.28)<br>
+                                        광주 빛고을 청년봉사단 14기 활동(17.03.20~06.30)<br>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-                <div class="col-sm-4">
-
-                    <div class="iconbox wow slideInUp" style="height: 350px">
-                        <div class="iconbox-icon">
-                            <span class="icon-badge"></span>
-                        </div>
-                        <div class="iconbox-text">
-                            <h3 class="iconbox-title">Certificate</h3>
-                            <div class="iconbox-desc" align="left">
-                                2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
-                                2018 Qualcomm Institute Project 수료<br>
-                                2014 워드프로세서 단일등급 취득<br>
-                                2014 GTQ 그래픽 기술 1급 취득<br>
-                                2016 컴퓨터활용 능력 1급 취득<br>
-                                2018 정보처리기사 취득<br>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-4">
-
-                    <div class="iconbox wow slideInRight" style="height: 350px">
-                        <div class="iconbox-icon">
-                            <span class="icon-question"></span>
-                        </div>
-                        <div class="iconbox-text">
-                            <h3 class="iconbox-title">others</h3>
-                            <div class="iconbox-desc"  align="left">
-                                Github &nbsp&nbsp<a href="https://github.com/khseob0715" >
-                                https://github.com/khseob0715</a><br>
-                                알고리즘 <a href="https://www.acmicpc.net/user/khseob0715" >
-                                https://www.acmicpc.net/user/khseob0715</a><br>
-                                교내 프로그래밍 튜터(17.09.01~)<br>
-                                육군 현역 정보보안병(14.05.27~16.02.26)<br>
-                                담양군청 지역경제과 행정인턴(14.01.02~02.28)<br>
-                                광주 빛고을 청년봉사단 14기 활동(17.03.20~06.30)<br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
             </div>
         </div><!-- .row -->
     </div>
