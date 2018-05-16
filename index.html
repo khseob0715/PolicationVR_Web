@@ -138,9 +138,8 @@ $n=0;
 
 while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
 $Test_date1[$n] = $gradeseqrow['Test_date'];
-$sub_check1[$n] = $gradeseqrow['sub_check'];
-$sub_gather1[$n] = $gradeseqrow['sub_gather'];
-$sub_invest1[$n] = $gradeseqrow['sub_invest'];
+$sub_evidence1[$n] = $gradeseqrow['sub_evidence'];
+$sub_witness1[$n] = $gradeseqrow['sub_witness'];
 $n++;
 }
 
@@ -153,9 +152,8 @@ $nsd2 = mysqli_num_rows($gradeseqresult);
 
 while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
 $Test_date2[$n] = $gradeseqrow['Test_date'];
-$sub_check2[$n] = $gradeseqrow['sub_check'];
-$sub_gather2[$n] = $gradeseqrow['sub_gather'];
-$sub_invest2[$n] = $gradeseqrow['sub_invest'];
+$sub_evidence2[$n] = $gradeseqrow['sub_evidence'];
+$sub_witness2[$n] = $gradeseqrow['sub_witness'];
 $n++;
 }
 
@@ -168,9 +166,8 @@ $nsd3 = mysqli_num_rows($gradeseqresult);
 
 while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
 $Test_date3[$n] = $gradeseqrow['Test_date'];
-$sub_check3[$n] = $gradeseqrow['sub_check'];
-$sub_gather3[$n] = $gradeseqrow['sub_gather'];
-$sub_invest3[$n] = $gradeseqrow['sub_invest'];
+$sub_evidence3[$n] = $gradeseqrow['sub_evidence'];
+$sub_witness3[$n] = $gradeseqrow['sub_witness'];
 $n++;
 }
 
@@ -187,21 +184,18 @@ mysqli_close($mysqli);
 
             var Test_date = <?php echo json_encode($Test_date1)?>;
 
-            var sub_check = <?php echo json_encode($sub_check1)?>;
+            var sub_evidence = <?php echo json_encode($sub_evidence1)?>;
 
-            var sub_gather = <?php echo json_encode($sub_gather1)?>;
-
-            var sub_invest = <?php echo json_encode($sub_invest1)?>;
+            var sub_witness = <?php echo json_encode($sub_witness1)?>;
 
             var n = <?php echo $nsd1 ?>*1;
 
             var chartData1 = [
             {
                 "date": Test_date[0],
-                "Check": sub_check[0]*1,
-                "Gather": sub_gather[0]*1,
-                "Invest": sub_invest[0]*1,
-                "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
+                "evidence": sub_evidence[0]*1,
+                "witness": sub_witness[0]*1,
+                "Average": (sub_evidence[0]*1+sub_witness[0]*1)/2
             }
             ];
 
@@ -209,10 +203,9 @@ mysqli_close($mysqli);
                 var tmpdata1 = [
                 {
                     "date": Test_date[i],
-                    "Check": sub_check[i]*1,
-                    "Gather": sub_gather[i]*1,
-                    "Invest": sub_invest[i]*1,
-                    "Average": (sub_check[i]*1+sub_gather[i]*1+sub_invest[i]*1)/3
+                    "evidence": sub_evidence[i]*1,
+                    "witness": sub_witness[i]*1,
+                    "Average": (sub_evidence[i]*1+sub_witness[i]*1)/2
                 }
                 ];
 
@@ -282,46 +275,32 @@ mysqli_close($mysqli);
 
                 // GRAPHS
                 // distance graph
-                var checkGraph = new AmCharts.AmGraph();
-                checkGraph.valueField = "Check";
-                checkGraph.title = "Check";
-                checkGraph.type = "column";
-                checkGraph.fillAlphas = 0.9;
-                checkGraph.valueAxis = scoreAxis; // indicate which axis should be used
-                checkGraph.balloonText = "[[value]]";
-                checkGraph.legendValueText = ": [[value]]";
-                checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#ED5565";
-                checkGraph.alphaField = "alpha";
-                chart.addGraph(checkGraph);
+                var evidenceGraph = new AmCharts.AmGraph();
+                evidenceGraph.valueField = "evidence";
+                evidenceGraph.title = "evidence";
+                evidenceGraph.type = "column";
+                evidenceGraph.fillAlphas = 0.9;
+                evidenceGraph.valueAxis = scoreAxis; // indicate which axis should be used
+                evidenceGraph.balloonText = "[[value]]";
+                evidenceGraph.legendValueText = ": [[value]]";
+                evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
+                evidenceGraph.lineColor = "#ED5565";
+                evidenceGraph.alphaField = "alpha";
+                chart.addGraph(evidenceGraph);
 
                 // latitude graph
-                var gatherGraph = new AmCharts.AmGraph();
-                gatherGraph.valueField = "Gather";
-                gatherGraph.title = "Gather";
-                gatherGraph.type = "column";
-                gatherGraph.fillAlphas = 0.9;
-                //gatherGraph.valueAxis = latitudeAxis; // indicate which axis should be used
-                gatherGraph.balloonText = "[[value]]";
-                gatherGraph.legendValueText = ": [[value]]";
-                gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#4FC1E9";
-                gatherGraph.alphaField = "alpha";
-                chart.addGraph(gatherGraph);
-
-                // duration graph
-                var investGraph = new AmCharts.AmGraph();
-                investGraph.valueField = "Invest";
-                investGraph.title = "Invest";
-                investGraph.type = "column";
-                investGraph.fillAlphas = 0.9;
-                //investGraph.valueAxis = durationAxis; // indicate which axis should be used
-                investGraph.balloonText = "[[value]]";
-                investGraph.legendValueText = ": [[value]]";
-                investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#48CFAD";
-                investGraph.alphaField = "alpha";
-                chart.addGraph(investGraph);
+                var witnessGraph = new AmCharts.AmGraph();
+                witnessGraph.valueField = "witness";
+                witnessGraph.title = "witness";
+                witnessGraph.type = "column";
+                witnessGraph.fillAlphas = 0.9;
+                //witnessGraph.valueAxis = latitudeAxis; // indicate which axis should be used
+                witnessGraph.balloonText = "[[value]]";
+                witnessGraph.legendValueText = ": [[value]]";
+                witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
+                witnessGraph.lineColor = "#4FC1E9";
+                witnessGraph.alphaField = "alpha";
+                chart.addGraph(witnessGraph);
 
                 var averageGraph = new AmCharts.AmGraph();
                 averageGraph.id = "g2";
@@ -329,12 +308,12 @@ mysqli_close($mysqli);
                 averageGraph.valueField = "Average";
                 averageGraph.type = "line";
                 averageGraph.valueAxis = averageAxis; // indicate which axis should be used
-                averageGraph.lineColor = "#ff5755";
+                averageGraph.lineColor = "#34495E";
                 averageGraph.balloonText = "[[value]]";
                 averageGraph.lineThickness = 1;
                 averageGraph.legendValueText = "[[value]]";
                 averageGraph.bullet = "square";
-                averageGraph.bulletBorderColor = "#ff5755";
+                averageGraph.bulletBorderColor = "#34495E";
                 averageGraph.bulletBorderThickness = 1;
                 averageGraph.bulletBorderAlpha = 1;
                 averageGraph.dashLengthField = "dashLength";
@@ -393,21 +372,18 @@ function zoomChart1() {
 
             var Test_date = <?php echo json_encode($Test_date2)?>;
 
-            var sub_check = <?php echo json_encode($sub_check2)?>;
+            var sub_evidence = <?php echo json_encode($sub_evidence2)?>;
 
-            var sub_gather = <?php echo json_encode($sub_gather2)?>;
-
-            var sub_invest = <?php echo json_encode($sub_invest2)?>;
+            var sub_witness = <?php echo json_encode($sub_witness2)?>;
 
             var n = <?php echo $nsd2 ?>*1;
 
             var chartData2 = [
             {
                 "date": Test_date[0],
-                "Check": sub_check[0]*1,
-                "Gather": sub_gather[0]*1,
-                "Invest": sub_invest[0]*1,
-                "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
+                "evidence": sub_evidence[0]*1,
+                "witness": sub_witness[0]*1,
+                "Average": (sub_evidence[0]*1+sub_witness[0]*1)/2
             }
             ];
 
@@ -415,10 +391,9 @@ function zoomChart1() {
                 var tmpdata2 = [
                 {
                     "date": Test_date[i],
-                    "Check": sub_check[i]*1,
-                    "Gather": sub_gather[i]*1,
-                    "Invest": sub_invest[i]*1,
-                    "Average": (sub_check[i]*1+sub_gather[i]*1+sub_invest[i]*1)/3
+                    "evidence": sub_evidence[i]*1,
+                    "witness": sub_witness[i]*1,
+                    "Average": (sub_evidence[i]*1+sub_witness[i]*1)/2
                 }
                 ];
 
@@ -486,46 +461,32 @@ function zoomChart1() {
 
                 // GRAPHS
                 // distance graph
-                var checkGraph = new AmCharts.AmGraph();
-                checkGraph.valueField = "Check";
-                checkGraph.title = "Check";
-                checkGraph.type = "column";
-                checkGraph.fillAlphas = 0.9;
-                checkGraph.valueAxis = scoreAxis; // indicate which axis should be used
-                checkGraph.balloonText = "[[value]]";
-                checkGraph.legendValueText = ": [[value]]";
-                checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#ED5565";
-                checkGraph.alphaField = "alpha";
-                chart.addGraph(checkGraph);
+                var evidenceGraph = new AmCharts.AmGraph();
+                evidenceGraph.valueField = "evidence";
+                evidenceGraph.title = "evidence";
+                evidenceGraph.type = "column";
+                evidenceGraph.fillAlphas = 0.9;
+                evidenceGraph.valueAxis = scoreAxis; // indicate which axis should be used
+                evidenceGraph.balloonText = "[[value]]";
+                evidenceGraph.legendValueText = ": [[value]]";
+                evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
+                evidenceGraph.lineColor = "#ED5565";
+                evidenceGraph.alphaField = "alpha";
+                chart.addGraph(evidenceGraph);
 
                 // latitude graph
-                var gatherGraph = new AmCharts.AmGraph();
-                gatherGraph.valueField = "Gather";
-                gatherGraph.title = "Gather";
-                gatherGraph.type = "column";
-                gatherGraph.fillAlphas = 0.9;
-                //gatherGraph.valueAxis = latitudeAxis; // indicate which axis should be used
-                gatherGraph.balloonText = "[[value]]";
-                gatherGraph.legendValueText = ": [[value]]";
-                gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#4FC1E9";
-                gatherGraph.alphaField = "alpha";
-                chart.addGraph(gatherGraph);
-
-                // duration graph
-                var investGraph = new AmCharts.AmGraph();
-                investGraph.valueField = "Invest";
-                investGraph.title = "Invest";
-                investGraph.type = "column";
-                investGraph.fillAlphas = 0.9;
-                //investGraph.valueAxis = durationAxis; // indicate which axis should be used
-                investGraph.balloonText = "[[value]]";
-                investGraph.legendValueText = ": [[value]]";
-                investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#48CFAD";
-                investGraph.alphaField = "alpha";
-                chart.addGraph(investGraph);
+                var witnessGraph = new AmCharts.AmGraph();
+                witnessGraph.valueField = "witness";
+                witnessGraph.title = "witness";
+                witnessGraph.type = "column";
+                witnessGraph.fillAlphas = 0.9;
+                //witnessGraph.valueAxis = latitudeAxis; // indicate which axis should be used
+                witnessGraph.balloonText = "[[value]]";
+                witnessGraph.legendValueText = ": [[value]]";
+                witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
+                witnessGraph.lineColor = "#4FC1E9";
+                witnessGraph.alphaField = "alpha";
+                chart.addGraph(witnessGraph);
 
                 var averageGraph = new AmCharts.AmGraph();
                 averageGraph.id = "g2";
@@ -533,12 +494,12 @@ function zoomChart1() {
                 averageGraph.valueField = "Average";
                 averageGraph.type = "line";
                 averageGraph.valueAxis = averageAxis; // indicate which axis should be used
-                averageGraph.lineColor = "#ff5755";
+                averageGraph.lineColor = "#34495E";
                 averageGraph.balloonText = "[[value]]";
                 averageGraph.lineThickness = 1;
                 averageGraph.legendValueText = "[[value]]";
                 averageGraph.bullet = "square";
-                averageGraph.bulletBorderColor = "#ff5755";
+                averageGraph.bulletBorderColor = "#34495E";
                 averageGraph.bulletBorderThickness = 1;
                 averageGraph.bulletBorderAlpha = 1;
                 averageGraph.dashLengthField = "dashLength";
@@ -598,21 +559,18 @@ function zoomChart2() {
 
             var Test_date = <?php echo json_encode($Test_date3)?>;
 
-            var sub_check = <?php echo json_encode($sub_check3)?>;
+            var sub_evidence = <?php echo json_encode($sub_evidence3)?>;
 
-            var sub_gather = <?php echo json_encode($sub_gather3)?>;
-
-            var sub_invest = <?php echo json_encode($sub_invest3)?>;
+            var sub_witness = <?php echo json_encode($sub_witness3)?>;
 
             var n = <?php echo $nsd3 ?>*1;
 
             var chartData3 = [
             {
                 "date": Test_date[0],
-                "Check": sub_check[0]*1,
-                "Gather": sub_gather[0]*1,
-                "Invest": sub_invest[0]*1,
-                "Average": (sub_check[0]*1+sub_gather[0]*1+sub_invest[0]*1)/3
+                "evidence": sub_evidence[0]*1,
+                "witness": sub_witness[0]*1,
+                "Average": (sub_evidence[0]*1+sub_witness[0]*1)/2
             }
             ];
 
@@ -620,10 +578,9 @@ function zoomChart2() {
                 var tmpdata3 = [
                 {
                     "date": Test_date[i],
-                    "Check": sub_check[i]*1,
-                    "Gather": sub_gather[i]*1,
-                    "Invest": sub_invest[i]*1,
-                    "Average": (sub_check[i]*1+sub_gather[i]*1+sub_invest[i]*1)/3
+                    "evidence": sub_evidence[i]*1,
+                    "witness": sub_witness[i]*1,
+                    "Average": (sub_evidence[i]*1+sub_witness[i]*1)/2
                 }
                 ];
 
@@ -691,46 +648,32 @@ function zoomChart2() {
 
                 // GRAPHS
                 // distance graph
-                var checkGraph = new AmCharts.AmGraph();
-                checkGraph.valueField = "Check";
-                checkGraph.title = "Check";
-                checkGraph.type = "column";
-                checkGraph.fillAlphas = 0.9;
-                checkGraph.valueAxis = scoreAxis; // indicate which axis should be used
-                checkGraph.balloonText = "[[value]]";
-                checkGraph.legendValueText = ": [[value]]";
-                checkGraph.legendPeriodValueText = "total: [[value.sum]]";
-                checkGraph.lineColor = "#ED5565";
-                checkGraph.alphaField = "alpha";
-                chart.addGraph(checkGraph);
+                var evidenceGraph = new AmCharts.AmGraph();
+                evidenceGraph.valueField = "evidence";
+                evidenceGraph.title = "evidence";
+                evidenceGraph.type = "column";
+                evidenceGraph.fillAlphas = 0.9;
+                evidenceGraph.valueAxis = scoreAxis; // indicate which axis should be used
+                evidenceGraph.balloonText = "[[value]]";
+                evidenceGraph.legendValueText = ": [[value]]";
+                evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
+                evidenceGraph.lineColor = "#ED5565";
+                evidenceGraph.alphaField = "alpha";
+                chart.addGraph(evidenceGraph);
 
                 // latitude graph
-                var gatherGraph = new AmCharts.AmGraph();
-                gatherGraph.valueField = "Gather";
-                gatherGraph.title = "Gather";
-                gatherGraph.type = "column";
-                gatherGraph.fillAlphas = 0.9;
-                //gatherGraph.valueAxis = latitudeAxis; // indicate which axis should be used
-                gatherGraph.balloonText = "[[value]]";
-                gatherGraph.legendValueText = ": [[value]]";
-                gatherGraph.legendPeriodValueText = "total: [[value.sum]]";
-                gatherGraph.lineColor = "#4FC1E9";
-                gatherGraph.alphaField = "alpha";
-                chart.addGraph(gatherGraph);
-
-                // duration graph
-                var investGraph = new AmCharts.AmGraph();
-                investGraph.valueField = "Invest";
-                investGraph.title = "Invest";
-                investGraph.type = "column";
-                investGraph.fillAlphas = 0.9;
-                //investGraph.valueAxis = durationAxis; // indicate which axis should be used
-                investGraph.balloonText = "[[value]]";
-                investGraph.legendValueText = ": [[value]]";
-                investGraph.legendPeriodValueText = "total: [[value.sum]]";
-                investGraph.lineColor = "#48CFAD";
-                investGraph.alphaField = "alpha";
-                chart.addGraph(investGraph);
+                var witnessGraph = new AmCharts.AmGraph();
+                witnessGraph.valueField = "witness";
+                witnessGraph.title = "witness";
+                witnessGraph.type = "column";
+                witnessGraph.fillAlphas = 0.9;
+                //witnessGraph.valueAxis = latitudeAxis; // indicate which axis should be used
+                witnessGraph.balloonText = "[[value]]";
+                witnessGraph.legendValueText = ": [[value]]";
+                witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
+                witnessGraph.lineColor = "#4FC1E9";
+                witnessGraph.alphaField = "alpha";
+                chart.addGraph(witnessGraph);
 
                 var averageGraph = new AmCharts.AmGraph();
                 averageGraph.id = "g2";
@@ -738,12 +681,12 @@ function zoomChart2() {
                 averageGraph.valueField = "Average";
                 averageGraph.type = "line";
                 averageGraph.valueAxis = averageAxis; // indicate which axis should be used
-                averageGraph.lineColor = "#ff5755";
+                averageGraph.lineColor = "#34495E";
                 averageGraph.balloonText = "[[value]]";
                 averageGraph.lineThickness = 1;
                 averageGraph.legendValueText = "[[value]]";
                 averageGraph.bullet = "square";
-                averageGraph.bulletBorderColor = "#ff5755";
+                averageGraph.bulletBorderColor = "#34495E";
                 averageGraph.bulletBorderThickness = 1;
                 averageGraph.bulletBorderAlpha = 1;
                 averageGraph.dashLengthField = "dashLength";
@@ -897,6 +840,8 @@ function zoomChart3() {
     <div class="pfblock-header wow fadeInUp">
      <h2 class="pfblock-title">My Score Chart</h2>
      <div class="pfblock-line"></div>
+      <font size="20" color="black"><?php echo $userrow[1] ?>     
+        </font>
      <div id="chartcase1div" style="height:400px;"></div>
      <div id="chartcase2div" style="height:400px;"></div>
      <div id="chartcase3div" style="height:400px;"></div>
@@ -931,7 +876,7 @@ function zoomChart3() {
                             <img src="assets/images/item-4.jpg" alt="img01"/>
                             <figcaption>
                                 <h2>detailed<span>  introduction</span></h2>
-                                <p>check of content<br>'about me'</p>
+                                <p>evidence of content<br>'about me'</p>
                             </figcaption>           
                         </figure>
                     </div>
