@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	
+	<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+	<script>
+  // Initialize Firebase
+  var config = {
+  	apiKey: "AIzaSyCN6l967RBpskZU3s8oqyGa1lnNsoYUaXc",
+  	authDomain: "policationvrweb.firebaseapp.com",
+  	databaseURL: "https://policationvrweb.firebaseio.com",
+  	projectId: "policationvrweb",
+  	storageBucket: "policationvrweb.appspot.com",
+  	messagingSenderId: "642203863012"
+  };
+  firebase.initializeApp(config);
+
+</script>
+<script type="text/javascript"></script>
+</head>
+<body>
+	<script>
+		var rootRef = firebase.database().ref();
+
+		rootRef.child('Users').child('1').once('value', function(data){
+			console.log('1번 :' , data.val());
+		});
+
+		rootRef.child('Users').orderByChild('case_mail').limitToFirst(10).equalTo('1_exam01@naver.com').once('value', function(data){
+			console.log('3번 :' , data.val());
+		});
+
+	</script>
+
+</body>
+</html>

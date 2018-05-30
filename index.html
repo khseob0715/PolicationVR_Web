@@ -24,75 +24,93 @@
     <!-- search -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
-    <style type="text/css">
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCN6l967RBpskZU3s8oqyGa1lnNsoYUaXc",
+        authDomain: "policationvrweb.firebaseapp.com",
+        databaseURL: "https://policationvrweb.firebaseio.com",
+        projectId: "policationvrweb",
+        storageBucket: "policationvrweb.appspot.com",
+        messagingSenderId: "642203863012"
+    };
+    firebase.initializeApp(config);
 
-    .amcharts-graph-g1 .amcharts-graph-stroke {
-        stroke-dasharray: 3px 3px;
-        stroke-linejoin: round;
-        stroke-linecap: round;
-        -webkit-animation: am-moving-dashes 1s linear infinite;
-        animation: am-moving-dashes 1s linear infinite;
-    }
+    var rootRef = firebase.database().ref();
 
-    @-webkit-keyframes am-moving-dashes {
-        100% {
-            stroke-dashoffset: -30px;
-        }
-    }
-    @keyframes am-moving-dashes {
-        100% {
-            stroke-dashoffset: -30px;
-        }
-    }
+</script>
 
 
-    .lastBullet {
-        -webkit-animation: am-pulsating 1s ease-out infinite;
-        animation: am-pulsating 1s ease-out infinite;
-    }
-    @-webkit-keyframes am-pulsating {
-        0% {
-            stroke-opacity: 1;
-            stroke-width: 0px;
-        }
-        100% {
-            stroke-opacity: 0;
-            stroke-width: 50px;
-        }
-    }
-    @keyframes am-pulsating {
-        0% {
-            stroke-opacity: 1;
-            stroke-width: 0px;
-        }
-        100% {
-            stroke-opacity: 0;
-            stroke-width: 50px;
-        }
-    }
+<style type="text/css">
 
-    .amcharts-graph-column-front {
-        -webkit-transition: all .3s .3s ease-out;
-        transition: all .3s .3s ease-out;
+.amcharts-graph-g1 .amcharts-graph-stroke {
+    stroke-dasharray: 3px 3px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    -webkit-animation: am-moving-dashes 1s linear infinite;
+    animation: am-moving-dashes 1s linear infinite;
+}
+
+@-webkit-keyframes am-moving-dashes {
+    100% {
+        stroke-dashoffset: -30px;
     }
-    .amcharts-graph-column-front:hover {
-        fill: #496375;
-        stroke: #496375;
-        -webkit-transition: all .3s ease-out;
-        transition: all .3s ease-out;
+}
+@keyframes am-moving-dashes {
+    100% {
+        stroke-dashoffset: -30px;
     }
+}
 
 
-    .amcharts-graph-g2 {
-      stroke-linejoin: round;
-      stroke-linecap: round;
-      stroke-dasharray: 500%;
-      stroke-dasharray: 0 \0/;    /* fixes IE prob */
-      stroke-dashoffset: 0 \0/;   /* fixes IE prob */
-      -webkit-animation: am-draw 40s;
-      animation: am-draw 40s;
-  }
-  @-webkit-keyframes am-draw {
+.lastBullet {
+    -webkit-animation: am-pulsating 1s ease-out infinite;
+    animation: am-pulsating 1s ease-out infinite;
+}
+@-webkit-keyframes am-pulsating {
+    0% {
+        stroke-opacity: 1;
+        stroke-width: 0px;
+    }
+    100% {
+        stroke-opacity: 0;
+        stroke-width: 50px;
+    }
+}
+@keyframes am-pulsating {
+    0% {
+        stroke-opacity: 1;
+        stroke-width: 0px;
+    }
+    100% {
+        stroke-opacity: 0;
+        stroke-width: 50px;
+    }
+}
+
+.amcharts-graph-column-front {
+    -webkit-transition: all .3s .3s ease-out;
+    transition: all .3s .3s ease-out;
+}
+.amcharts-graph-column-front:hover {
+    fill: #496375;
+    stroke: #496375;
+    -webkit-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+
+.amcharts-graph-g2 {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 500%;
+  stroke-dasharray: 0 \0/;    /* fixes IE prob */
+  stroke-dashoffset: 0 \0/;   /* fixes IE prob */
+  -webkit-animation: am-draw 40s;
+  animation: am-draw 10s;
+}
+@-webkit-keyframes am-draw {
     0% {
         stroke-dashoffset: 500%;
     }
@@ -109,127 +127,72 @@
     }
 }
 
-
-
-
 </style>
 
-<?php
+<script type="text/javascript">
 
-$hostname = "127.0.0.1";
-$username= "root";   
-$password = "q56125612";
-$dbname = "userinfo";
+    function change(){
+        var schMail = document.getElementById("schmail").value;
 
-$mysqli = new mysqli($hostname, $username, $password, $dbname); 
+        console.log(schMail);
 
-$Uemail = $_REQUEST["schmail"];
+        rootRef.child('Users').orderByChild('case_mail').equalTo("1_"+schMail).once('value').then(snap => {
+            chartData1=Object.values(snap.val());
 
-$user = "SELECT * FROM user WHERE User_email = '$Uemail'";
-$userresult = mysqli_query($mysqli, $user);
-$userrow = mysqli_fetch_array($userresult);
+            chart1.dataProvider = chartData1;
+            chart1.validateData();
+            chart1.write("chartcase1div");
 
-$gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 1";
-$gradeseqresult = mysqli_query($mysqli, $gradeseq);
+            console.log(chartData1);
 
-$nsd1 = mysqli_num_rows($gradeseqresult);
+        });
 
-$n=0;
+        rootRef.child('Users').orderByChild('case_mail').equalTo("2_"+schMail).once('value').then(snap => {
+            chartData2=Object.values(snap.val());
 
-while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
-$Test_date1[$n] = $gradeseqrow['Test_date'];
-$sub_evidence1[$n] = $gradeseqrow['sub_evidence'];
-$sub_witness1[$n] = $gradeseqrow['sub_witness'];
-$n++;
-}
+            chart2.dataProvider = chartData2;
+            chart2.validateData();
+            chart2.write("chartcase2div");
 
-$n = 0;
+            console.log(chartData2);
 
-$gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 2";
-$gradeseqresult = mysqli_query($mysqli, $gradeseq);
+        });
 
-$nsd2 = mysqli_num_rows($gradeseqresult);
+        rootRef.child('Users').orderByChild('case_mail').equalTo("3_"+schMail).once('value').then(snap => {
+            chartData3=Object.values(snap.val());
 
-while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
-$Test_date2[$n] = $gradeseqrow['Test_date'];
-$sub_evidence2[$n] = $gradeseqrow['sub_evidence'];
-$sub_witness2[$n] = $gradeseqrow['sub_witness'];
-$n++;
-}
+            chart3.dataProvider = chartData3;
+            chart3.validateData();
+            chart3.write("chartcase3div");
 
-$n = 0;
+            console.log(chartData3);
 
-$gradeseq = "SELECT * FROM grade WHERE User_sequence = '$userrow[0]' AND Test_Case = 3";
-$gradeseqresult = mysqli_query($mysqli, $gradeseq);
+        });
+    }
 
-$nsd3 = mysqli_num_rows($gradeseqresult);
-
-while($gradeseqrow = mysqli_fetch_array($gradeseqresult)) {
-$Test_date3[$n] = $gradeseqrow['Test_date'];
-$sub_evidence3[$n] = $gradeseqrow['sub_evidence'];
-$sub_witness3[$n] = $gradeseqrow['sub_witness'];
-$n++;
-}
-
-mysqli_free_result($userresult);
-mysqli_free_result($gradeseqresult);
-mysqli_close($mysqli);
-
-?>
+</script>
 
 <script>
-            // note, we have townName field with a name specified for each datapoint and townName2 with only some of the names specified.
-            // we use townName2 to display town names next to the bullet. And as these names would overlap if displayed next to each bullet,
-            // we created this townName2 field and set only some of the names for this purpse
-
-            var Test_date = <?php echo json_encode($Test_date1)?>;
-
-            var sub_evidence = <?php echo json_encode($sub_evidence1)?>;
-
-            var sub_witness = <?php echo json_encode($sub_witness1)?>;
-
-            var n = <?php echo $nsd1 ?>*1;
-
-            var chartData1 = [
-            {
-                "date": Test_date[0],
-                "evidence": sub_evidence[0]*1,
-                "witness": sub_witness[0]*1,
-                "Average": (sub_evidence[0]*1+sub_witness[0]*1)/2
-            }
-            ];
-
-            for(var i = 1; i<n; i++){
-                var tmpdata1 = [
-                {
-                    "date": Test_date[i],
-                    "evidence": sub_evidence[i]*1,
-                    "witness": sub_witness[i]*1,
-                    "Average": (sub_evidence[i]*1+sub_witness[i]*1)/2
-                }
-                ];
-
-                chartData1 = chartData1.concat(tmpdata1);
-            }
-
-            var chart;
+ 
+            var chartData1;
+            var chart1;
 
             AmCharts.ready(function () {
                 // SERIAL CHART
-                chart = new AmCharts.AmSerialChart();
-                chart.addTitle("CrimeScene 01", 24);
-                chart.addClassNames = true;
-                chart.dataProvider = chartData1;
-                chart.categoryField = "date";
-                chart.dataDateFormat = "YYYY-MM-DD";
-                chart.startDuration = 1;
-                chart.color = "#161616";
-                chart.marginLeft = 0;
-                chart.addListener("dataUpdated", zoomChart1);
+                chart1 = new AmCharts.AmSerialChart();
+                chart1.addTitle("CrimeScene 01", 24);
+                chart1.addClassNames = true;
+                //chart.dataProvider = chartData1;
+                chart1.categoryField = "date";
+                chart1.dataDateFormat = "YYYY-MM-DD";
+                chart1.startDuration = 1;
+                chart1.color = "#161616";
+                chart1.marginLeft = 0;
+                chart1.addListener("dataUpdated", zoomChart1);
 
                 // AXES
                 // category
-                var categoryAxis = chart.categoryAxis;
+                var categoryAxis = chart1.categoryAxis;
                 categoryAxis.parseDates = false; // as our data is date-based, we set parseDates to true
                 categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
                 categoryAxis.autoGridCount = false;
@@ -261,7 +224,7 @@ mysqli_close($mysqli);
                 scoreAxis.gridAlpha = 0;
                 scoreAxis.axisAlpha = 0;
                 scoreAxis.color = "#161616";
-                chart.addValueAxis(scoreAxis);
+                chart1.addValueAxis(scoreAxis);
 
                 var averageAxis = new AmCharts.ValueAxis();
                 averageAxis.title = "Average";
@@ -270,37 +233,36 @@ mysqli_close($mysqli);
                 averageAxis.inside = false;
                 averageAxis.color = "#161616";
                 averageAxis.position = "right";
-                chart.addValueAxis(averageAxis);
-
+                chart1.addValueAxis(averageAxis);
 
                 // GRAPHS
                 // distance graph
                 var evidenceGraph = new AmCharts.AmGraph();
                 evidenceGraph.valueField = "evidence";
-                evidenceGraph.title = "evidence";
+                evidenceGraph.title = "Investigation";
                 evidenceGraph.type = "column";
                 evidenceGraph.fillAlphas = 0.9;
                 evidenceGraph.valueAxis = scoreAxis; // indicate which axis should be used
                 evidenceGraph.balloonText = "[[value]]";
                 evidenceGraph.legendValueText = ": [[value]]";
-                evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
+                //evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
                 evidenceGraph.lineColor = "#ED5565";
                 evidenceGraph.alphaField = "alpha";
-                chart.addGraph(evidenceGraph);
+                chart1.addGraph(evidenceGraph);
 
                 // latitude graph
                 var witnessGraph = new AmCharts.AmGraph();
                 witnessGraph.valueField = "witness";
-                witnessGraph.title = "witness";
+                witnessGraph.title = "Inquisition";
                 witnessGraph.type = "column";
                 witnessGraph.fillAlphas = 0.9;
                 //witnessGraph.valueAxis = latitudeAxis; // indicate which axis should be used
                 witnessGraph.balloonText = "[[value]]";
                 witnessGraph.legendValueText = ": [[value]]";
-                witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
+                //witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
                 witnessGraph.lineColor = "#4FC1E9";
                 witnessGraph.alphaField = "alpha";
-                chart.addGraph(witnessGraph);
+                chart1.addGraph(witnessGraph);
 
                 var averageGraph = new AmCharts.AmGraph();
                 averageGraph.id = "g2";
@@ -318,7 +280,7 @@ mysqli_close($mysqli);
                 averageGraph.bulletBorderAlpha = 1;
                 averageGraph.dashLengthField = "dashLength";
                 averageGraph.animationPlayed = true;
-                chart.addGraph(averageGraph);
+                chart1.addGraph(averageGraph);
 
                 // SCROLL
                 var chartScrollbar = new AmCharts.ChartScrollbar();
@@ -333,7 +295,7 @@ mysqli_close($mysqli);
                 chartScrollbar.dragIcon = "dragIconRectSmall";
                 chartScrollbar.dragIconHeight = 25;
                 chartScrollbar.dragIconWidth = 25;
-                chart.addChartScrollbar(chartScrollbar);
+                chart1.addChartScrollbar(chartScrollbar);
 
                 // CURSOR
                 var chartCursor = new AmCharts.ChartCursor();
@@ -344,7 +306,7 @@ mysqli_close($mysqli);
                 chartCursor.valueLineBalloonEnabled = true;
                 chartCursor.valueLineEnabled = true;
                 chartCursor.valueLineAlpha = 0.5;
-                chart.addChartCursor(chartCursor);
+                chart1.addChartCursor(chartCursor);
 
                 // LEGEND
                 var legend = new AmCharts.AmLegend();
@@ -353,71 +315,38 @@ mysqli_close($mysqli);
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
                 legend.color = "#161616";
-                chart.addLegend(legend);
+                chart1.addLegend(legend);
 
-                // WRITE
-                chart.write("chartcase1div");
             });
 
 function zoomChart1() {
                 // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-                chart.zoomToIndexes(chartData1.length - 8, chartData1.length - 1);
+                chart1.zoomToIndexes(chartData1.length - 8, chartData1.length - 1);
             }
+
+            
         </script>
-
         <script>
-            // note, we have townName field with a name specified for each datapoint and townName2 with only some of the names specified.
-            // we use townName2 to display town names next to the bullet. And as these names would overlap if displayed next to each bullet,
-            // we created this townName2 field and set only some of the names for this purpse
 
-            var Test_date = <?php echo json_encode($Test_date2)?>;
-
-            var sub_evidence = <?php echo json_encode($sub_evidence2)?>;
-
-            var sub_witness = <?php echo json_encode($sub_witness2)?>;
-
-            var n = <?php echo $nsd2 ?>*1;
-
-            var chartData2 = [
-            {
-                "date": Test_date[0],
-                "evidence": sub_evidence[0]*1,
-                "witness": sub_witness[0]*1,
-                "Average": (sub_evidence[0]*1+sub_witness[0]*1)/2
-            }
-            ];
-
-            for(var i = 1; i<n; i++){
-                var tmpdata2 = [
-                {
-                    "date": Test_date[i],
-                    "evidence": sub_evidence[i]*1,
-                    "witness": sub_witness[i]*1,
-                    "Average": (sub_evidence[i]*1+sub_witness[i]*1)/2
-                }
-                ];
-
-                chartData2 = chartData2.concat(tmpdata2);
-            }
-
-            var chart;
+            var chartData2;
+            var chart2;
 
             AmCharts.ready(function () {
                 // SERIAL CHART
-                chart = new AmCharts.AmSerialChart();
-                chart.addTitle("CrimeScene 02", 24);
-                chart.addClassNames = true;
-                chart.dataProvider = chartData2;
-                chart.categoryField = "date";
-                chart.dataDateFormat = "YYYY-MM-DD";
-                chart.startDuration = 1;
-                chart.color = "#161616";
-                chart.marginLeft = 0;
-                chart.addListener("dataUpdated", zoomChart2);
+                chart2 = new AmCharts.AmSerialChart();
+                chart2.addTitle("CrimeScene 02", 24);
+                chart2.addClassNames = true;
+                //chart.dataProvider = chartData1;
+                chart2.categoryField = "date";
+                chart2.dataDateFormat = "YYYY-MM-DD";
+                chart2.startDuration = 1;
+                chart2.color = "#161616";
+                chart2.marginLeft = 0;
+                chart2.addListener("dataUpdated", zoomChart2);
 
                 // AXES
                 // category
-                var categoryAxis = chart.categoryAxis;
+                var categoryAxis = chart2.categoryAxis;
                 categoryAxis.parseDates = false; // as our data is date-based, we set parseDates to true
                 categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
                 categoryAxis.autoGridCount = false;
@@ -448,45 +377,46 @@ function zoomChart1() {
                 scoreAxis.title = "Score";
                 scoreAxis.gridAlpha = 0;
                 scoreAxis.axisAlpha = 0;
-                chart.addValueAxis(scoreAxis);
+                scoreAxis.color = "#161616";
+                chart2.addValueAxis(scoreAxis);
 
                 var averageAxis = new AmCharts.ValueAxis();
                 averageAxis.title = "Average";
                 averageAxis.gridAlpha = 0;
                 averageAxis.axisAlpha = 0;
                 averageAxis.inside = false;
+                averageAxis.color = "#161616";
                 averageAxis.position = "right";
-                chart.addValueAxis(averageAxis);
-
+                chart2.addValueAxis(averageAxis);
 
                 // GRAPHS
                 // distance graph
                 var evidenceGraph = new AmCharts.AmGraph();
                 evidenceGraph.valueField = "evidence";
-                evidenceGraph.title = "evidence";
+                evidenceGraph.title = "Investigation";
                 evidenceGraph.type = "column";
                 evidenceGraph.fillAlphas = 0.9;
                 evidenceGraph.valueAxis = scoreAxis; // indicate which axis should be used
                 evidenceGraph.balloonText = "[[value]]";
                 evidenceGraph.legendValueText = ": [[value]]";
-                evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
+                //evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
                 evidenceGraph.lineColor = "#ED5565";
                 evidenceGraph.alphaField = "alpha";
-                chart.addGraph(evidenceGraph);
+                chart2.addGraph(evidenceGraph);
 
                 // latitude graph
                 var witnessGraph = new AmCharts.AmGraph();
                 witnessGraph.valueField = "witness";
-                witnessGraph.title = "witness";
+                witnessGraph.title = "Inquisition";
                 witnessGraph.type = "column";
                 witnessGraph.fillAlphas = 0.9;
                 //witnessGraph.valueAxis = latitudeAxis; // indicate which axis should be used
                 witnessGraph.balloonText = "[[value]]";
                 witnessGraph.legendValueText = ": [[value]]";
-                witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
+                //witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
                 witnessGraph.lineColor = "#4FC1E9";
                 witnessGraph.alphaField = "alpha";
-                chart.addGraph(witnessGraph);
+                chart2.addGraph(witnessGraph);
 
                 var averageGraph = new AmCharts.AmGraph();
                 averageGraph.id = "g2";
@@ -504,7 +434,7 @@ function zoomChart1() {
                 averageGraph.bulletBorderAlpha = 1;
                 averageGraph.dashLengthField = "dashLength";
                 averageGraph.animationPlayed = true;
-                chart.addGraph(averageGraph);
+                chart2.addGraph(averageGraph);
 
                 // SCROLL
                 var chartScrollbar = new AmCharts.ChartScrollbar();
@@ -519,7 +449,7 @@ function zoomChart1() {
                 chartScrollbar.dragIcon = "dragIconRectSmall";
                 chartScrollbar.dragIconHeight = 25;
                 chartScrollbar.dragIconWidth = 25;
-                chart.addChartScrollbar(chartScrollbar);
+                chart2.addChartScrollbar(chartScrollbar);
 
                 // CURSOR
                 var chartCursor = new AmCharts.ChartCursor();
@@ -530,8 +460,7 @@ function zoomChart1() {
                 chartCursor.valueLineBalloonEnabled = true;
                 chartCursor.valueLineEnabled = true;
                 chartCursor.valueLineAlpha = 0.5;
-
-                chart.addChartCursor(chartCursor);
+                chart2.addChartCursor(chartCursor);
 
                 // LEGEND
                 var legend = new AmCharts.AmLegend();
@@ -540,71 +469,37 @@ function zoomChart1() {
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
                 legend.color = "#161616";
-                chart.addLegend(legend);
+                chart2.addLegend(legend);
 
-                // WRITE
-                chart.write("chartcase2div");
             });
 
 function zoomChart2() {
                 // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-                chart.zoomToIndexes(chartData2.length - 8, chartData2.length - 1);
+                chart2.zoomToIndexes(chartData2.length - 8, chartData2.length - 1);
             }
+
+            
         </script>
-
         <script>
-            // note, we have townName field with a name specified for each datapoint and townName2 with only some of the names specified.
-            // we use townName2 to display town names next to the bullet. And as these names would overlap if displayed next to each bullet,
-            // we created this townName2 field and set only some of the names for this purpse
-
-            var Test_date = <?php echo json_encode($Test_date3)?>;
-
-            var sub_evidence = <?php echo json_encode($sub_evidence3)?>;
-
-            var sub_witness = <?php echo json_encode($sub_witness3)?>;
-
-            var n = <?php echo $nsd3 ?>*1;
-
-            var chartData3 = [
-            {
-                "date": Test_date[0],
-                "evidence": sub_evidence[0]*1,
-                "witness": sub_witness[0]*1,
-                "Average": (sub_evidence[0]*1+sub_witness[0]*1)/2
-            }
-            ];
-
-            for(var i = 1; i<n; i++){
-                var tmpdata3 = [
-                {
-                    "date": Test_date[i],
-                    "evidence": sub_evidence[i]*1,
-                    "witness": sub_witness[i]*1,
-                    "Average": (sub_evidence[i]*1+sub_witness[i]*1)/2
-                }
-                ];
-
-                chartData3 = chartData3.concat(tmpdata3);
-            }
-
-            var chart;
+            var chartData3;
+            var chart3;
 
             AmCharts.ready(function () {
                 // SERIAL CHART
-                chart = new AmCharts.AmSerialChart();
-                chart.addTitle("CrimScene 03", 24);
-                chart.addClassNames = true;
-                chart.dataProvider = chartData3;
-                chart.categoryField = "date";
-                chart.dataDateFormat = "YYYY-MM-DD";
-                chart.startDuration = 1;
-                chart.color = "#161616";
-                chart.marginLeft = 0;
-                chart.addListener("dataUpdated", zoomChart3);
+                chart3 = new AmCharts.AmSerialChart();
+                chart3.addTitle("CrimeScene 03", 24);
+                chart3.addClassNames = true;
+                //chart.dataProvider = chartData1;
+                chart3.categoryField = "date";
+                chart3.dataDateFormat = "YYYY-MM-DD";
+                chart3.startDuration = 1;
+                chart3.color = "#161616";
+                chart3.marginLeft = 0;
+                chart3.addListener("dataUpdated", zoomChart3);
 
                 // AXES
                 // category
-                var categoryAxis = chart.categoryAxis;
+                var categoryAxis = chart3.categoryAxis;
                 categoryAxis.parseDates = false; // as our data is date-based, we set parseDates to true
                 categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
                 categoryAxis.autoGridCount = false;
@@ -635,45 +530,46 @@ function zoomChart2() {
                 scoreAxis.title = "Score";
                 scoreAxis.gridAlpha = 0;
                 scoreAxis.axisAlpha = 0;
-                chart.addValueAxis(scoreAxis);
+                scoreAxis.color = "#161616";
+                chart3.addValueAxis(scoreAxis);
 
                 var averageAxis = new AmCharts.ValueAxis();
                 averageAxis.title = "Average";
                 averageAxis.gridAlpha = 0;
                 averageAxis.axisAlpha = 0;
                 averageAxis.inside = false;
+                averageAxis.color = "#161616";
                 averageAxis.position = "right";
-                chart.addValueAxis(averageAxis);
-
+                chart3.addValueAxis(averageAxis);
 
                 // GRAPHS
                 // distance graph
                 var evidenceGraph = new AmCharts.AmGraph();
                 evidenceGraph.valueField = "evidence";
-                evidenceGraph.title = "evidence";
+                evidenceGraph.title = "Investigation";
                 evidenceGraph.type = "column";
                 evidenceGraph.fillAlphas = 0.9;
                 evidenceGraph.valueAxis = scoreAxis; // indicate which axis should be used
                 evidenceGraph.balloonText = "[[value]]";
                 evidenceGraph.legendValueText = ": [[value]]";
-                evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
+                //evidenceGraph.legendPeriodValueText = "total: [[value.sum]]";
                 evidenceGraph.lineColor = "#ED5565";
                 evidenceGraph.alphaField = "alpha";
-                chart.addGraph(evidenceGraph);
+                chart3.addGraph(evidenceGraph);
 
                 // latitude graph
                 var witnessGraph = new AmCharts.AmGraph();
                 witnessGraph.valueField = "witness";
-                witnessGraph.title = "witness";
+                witnessGraph.title = "Inquisition";
                 witnessGraph.type = "column";
                 witnessGraph.fillAlphas = 0.9;
                 //witnessGraph.valueAxis = latitudeAxis; // indicate which axis should be used
                 witnessGraph.balloonText = "[[value]]";
                 witnessGraph.legendValueText = ": [[value]]";
-                witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
+                //witnessGraph.legendPeriodValueText = "total: [[value.sum]]";
                 witnessGraph.lineColor = "#4FC1E9";
                 witnessGraph.alphaField = "alpha";
-                chart.addGraph(witnessGraph);
+                chart3.addGraph(witnessGraph);
 
                 var averageGraph = new AmCharts.AmGraph();
                 averageGraph.id = "g2";
@@ -691,7 +587,7 @@ function zoomChart2() {
                 averageGraph.bulletBorderAlpha = 1;
                 averageGraph.dashLengthField = "dashLength";
                 averageGraph.animationPlayed = true;
-                chart.addGraph(averageGraph);
+                chart3.addGraph(averageGraph);
 
                 // SCROLL
                 var chartScrollbar = new AmCharts.ChartScrollbar();
@@ -706,7 +602,7 @@ function zoomChart2() {
                 chartScrollbar.dragIcon = "dragIconRectSmall";
                 chartScrollbar.dragIconHeight = 25;
                 chartScrollbar.dragIconWidth = 25;
-                chart.addChartScrollbar(chartScrollbar);
+                chart3.addChartScrollbar(chartScrollbar);
 
                 // CURSOR
                 var chartCursor = new AmCharts.ChartCursor();
@@ -717,7 +613,7 @@ function zoomChart2() {
                 chartCursor.valueLineBalloonEnabled = true;
                 chartCursor.valueLineEnabled = true;
                 chartCursor.valueLineAlpha = 0.5;
-                chart.addChartCursor(chartCursor);
+                chart3.addChartCursor(chartCursor);
 
                 // LEGEND
                 var legend = new AmCharts.AmLegend();
@@ -726,78 +622,79 @@ function zoomChart2() {
                 legend.valueWidth = 120;
                 legend.useGraphSettings = true;
                 legend.color = "#161616";
-                chart.addLegend(legend);
+                chart3.addLegend(legend);
 
-                // WRITE
-                chart.write("chartcase3div");
             });
 
 function zoomChart3() {
                 // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-                chart.zoomToIndexes(chartData3.length - 8, chartData3.length - 1);
+                chart3.zoomToIndexes(chartData3.length - 8, chartData3.length - 1);
             }
 
+            
         </script>
+
+
+
     </head>
+
     <body>
+     <!-- Preloader -->
+     <div id="preloader">
+      <div id="status"></div>
+  </div>
 
-       <!-- Preloader -->
+  <!-- Home start -->
 
-       <div id="preloader">
-          <div id="status"></div>
-      </div>
+  <section id="home" class="pfblock-image screen-height">
+      <div class="home-overlay"></div>
+      <div class="intro">
 
-      <!-- Home start -->
+       <h1>POLICATION VR</h1>
+       <div class="start">Criminal Profiling Training and Assessment System</div>
+   </div>
 
-      <section id="home" class="pfblock-image screen-height">
-          <div class="home-overlay"></div>
-          <div class="intro">
+   <a href="#search">
+       <div class="scroll-down">
+        <span>
+         <i class="fa fa-angle-down fa-2x"></i>
+     </span>
+ </div>
+</a>
 
-             <h1>POLICATION VR</h1>
-             <div class="start">Criminal Profiling Training and Assessment System</div>
-         </div>
+</section>
 
-         <a href="#search">
-             <div class="scroll-down">
-                <span>
-                   <i class="fa fa-angle-down fa-2x"></i>
-               </span>
-           </div>
-       </a>
+<!-- Home end -->
 
-   </section>
+<!-- Navigation start -->
 
-   <!-- Home end -->
+<header class="header">
 
-   <!-- Navigation start -->
+  <nav class="navbar navbar-custom" role="navigation">
 
-   <header class="header">
+   <div class="container">
 
-      <nav class="navbar navbar-custom" role="navigation">
+    <div class="navbar-header">
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+  </button>
+  <a class="navbar-brand" href="index.html" style="text-transform: capitalize;">Polication VR</a>
+</div>
 
-         <div class="container">
+<div class="collapse navbar-collapse" id="custom-collapse">
+ <ul class="nav navbar-nav navbar-right">
+  <li><a href="#home">Home</a></li>
+  <li><a href="#search">Search</a></li>
+  <li><a href="#score">Score</a></li>
+  <li><a href="#project">Project</a></li>
+  <li><a href="#whoami">WHOAMI</a></li>
+</ul>
+</div>
 
-            <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="index.html" style="text-transform: capitalize;">Polication VR</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="custom-collapse">
-           <ul class="nav navbar-nav navbar-right">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#search">Search</a></li>
-              <li><a href="#score">Score</a></li>
-              <li><a href="#project">Project</a></li>
-              <li><a href="#whoami">WHOAMI</a></li>
-          </ul>
-      </div>
-
-  </div><!-- .container -->
+</div><!-- .container -->
 
 </nav>
 
@@ -807,24 +704,29 @@ function zoomChart3() {
 
 <!-- Services start -->
 
+
 <section id="search" class="pfblock pfblock">
 
     <div class="col-sm-6 col-sm-offset-3">
-       <div class="pfblock-header wow fadeInUp"></div>
-       <form action="http://localhost/" method="post" autocomplete="off">
-        <fieldset class="url">
-          <input id="url" type="text" name="schmail" required>
-          <label for="url"><i class="fa fa-search" aria-hidden="true"></i> Search</label>
-          <div class="after"></div>
-      </fieldset>
-      <fieldset class="enter">
-          <button></button>
-      </fieldset>
-  </form>
-</div>
-</div>
+        <div class="pfblock-header wow fadeInUp"></div>
+        <div class="container">
+            <div>
+                <fieldset class="url">
+                    <input id="schmail" type="text" name="schmail" required>
+                    <label for="url"><i class="fa fa-search" aria-hidden="true"></i> Search</label>
+                    <div class="after"></div>
+                </fieldset>
+            </div>
+            <div style="float:right;">
+                <fieldset class="enter">
+                    <button onclick="change()"></button>
+                </fieldset>
+            </div>
+        </div>
+    </div>
 
 </section>
+
 
 <!-- Services end -->
 
@@ -835,169 +737,212 @@ function zoomChart3() {
 
   <div class="row">
 
-   <div class="col-sm-6 col-sm-offset-3">
+     <div class="col-sm-6 col-sm-offset-3">
 
-    <div class="pfblock-header wow fadeInUp">
-     <h2 class="pfblock-title">My Score Chart</h2>
-     <div class="pfblock-line"></div>
-      <font size="20" color="black"><?php echo $userrow[1] ?>     
-        </font>
-     <div id="chartcase1div" style="height:400px;"></div>
-     <div id="chartcase2div" style="height:400px;"></div>
-     <div id="chartcase3div" style="height:400px;"></div>
- </div>
+        <div class="pfblock-header wow fadeInUp">
+           <h2 class="pfblock-title">My Score Chart</h2>
+           <div class="pfblock-line"></div>
+           <div id="chartcase1div" style="height:400px;"></div>
+           <div id="chartcase2div" style="height:400px;"></div>
+           <div id="chartcase3div" style="height:400px;"></div>
+       </div>
+
+   </div>
 
 </div>
-
-</div><!-- .row -->
 
 
 </section>
 
-
+<!-- 
 <section id="project" class="pfblock pfblock">
     <div class="container">
         <div class="row">
 
             <div class="col-sm-6 col-sm-offset-3">
             </div>
-        </div><!-- .row -->
+        </div>
     </div>
 </section>
 
 <section id="whoami" class="pfblock pfblock-gray">
-    <div class="container">
-        <div class="row">
-
-            <a href="introduction.html">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="grid wow zoomIn">
-                        <figure class="effect-bubba">
-                            <img src="assets/images/item-4.jpg" alt="img01"/>
-                            <figcaption>
-                                <h2>detailed<span>  introduction</span></h2>
-                                <p>evidence of content<br>'about me'</p>
-                            </figcaption>           
-                        </figure>
-                    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="iconbox wow slideInLeft" style="height: 350px">
+                <div class="iconbox-icon">
+                    <span class="icon-badge"></span>
                 </div>
-            </a>
+                <div class="iconbox-text">
+                    <h3 class="iconbox-title">김한섭</h3>
+                    <div class="iconbox-desc" align="left" >
+                        2016 청년취업아카데미 IoT 융합프로젝트 최우수상<br>
+                        2016 학생 자율 팀프로젝트(드론) 우수상<br>
 
-        </div>
+                        <a href="introduction.html">
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="grid wow zoomIn">
+                                    <figure class="effect-bubba">
+                                        <img src="assets/images/item-4.jpg" alt="img01"/>
+                                        <figcaption>
+                                            <h2>detailed<span>  introduction</span></h2>
+                                            <p>evidence of content<br>'about me'</p>
+                                        </figcaption>           
+                                    </figure>
 
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="iconbox wow slideInLeft" style="height: 350px">
-                    <div class="iconbox-icon">
-                        <span class="icon-puzzle"></span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="iconbox-text">
-                        <h3 class="iconbox-title">Award</h3>
-                        <div class="iconbox-desc" align="left" >
-                            2016 청년취업아카데미 IoT 융합프로젝트 최우수상<br>
-                            2016 학생 자율 팀프로젝트(드론) 우수상<br>
+
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="iconbox wow slideInLeft" style="height: 350px">
+                                <div class="iconbox-icon">
+                                    <span class="icon-puzzle"></span>
+                                </div>
+                                <div class="iconbox-text">
+                                    <h3 class="iconbox-title">Award</h3>
+                                    <div class="iconbox-desc" align="left" >
+                                        2016 청년취업아카데미 IoT 융합프로젝트 최우수상<br>
+                                        2016 학생 자율 팀프로젝트(드론) 우수상<br>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="iconbox-text">
+                                <h3 class="iconbox-title">김해지</h3>
+                                <div class="iconbox-desc" align="left">
+                                    2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
+                                    2018 Qualcomm Institute Project 수료<br>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+
+                        <div class="iconbox wow slideInUp" style="height: 350px">
+                            <div class="iconbox-icon">
+                                <span class="icon-badge"></span>
+                            </div>
+                            <div class="iconbox-text">
+                                <h3 class="iconbox-title">Certificate</h3>
+                                <div class="iconbox-desc" align="left">
+                                    2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
+                                    2018 Qualcomm Institute Project 수료<br>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iconbox-text">
+                            <h3 class="iconbox-title">김진혁</h3>
+                            <div class="iconbox-desc" align="left">
+                                2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
+                                2018 Qualcomm Institute Project 수료<br>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <div class="iconbox wow slideInUp" style="height: 350px">
+                                    <div class="iconbox-icon">
+                                        <span class="icon-badge"></span>
+                                    </div>
+                                    <div class="iconbox-text">
+                                        <h3 class="iconbox-title">Certificate</h3>
+                                        <div class="iconbox-desc" align="left">
+                                            2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
+                                            2018 Qualcomm Institute Project 수료<br>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
-                    </div>
-                </div>
+                        <div class="col-sm-3">
+                            <div class="iconbox wow slideInUp" style="height: 350px">
+                                <div class="iconbox-icon">
+                                    <span class="icon-badge"></span>
+                                </div>
+                                <div class="iconbox-text">
+                                    <h3 class="iconbox-title">Certificate</h3>
+                                    <div class="iconbox-desc" align="left">
+                                        2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
+                                        2018 Qualcomm Institute Project 수료<br>
 
-            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="iconbox-text">
+                                <h3 class="iconbox-title">김기용</h3>
+                                <div class="iconbox-desc" align="left">
+                                    2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
+                                    2018 Qualcomm Institute Project 수료<br>
 
-            <div class="col-sm-3">
-
-                <div class="iconbox wow slideInUp" style="height: 350px">
-                    <div class="iconbox-icon">
-                        <span class="icon-badge"></span>
-                    </div>
-                    <div class="iconbox-text">
-                        <h3 class="iconbox-title">Certificate</h3>
-                        <div class="iconbox-desc" align="left">
-                            2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
-                            2018 Qualcomm Institute Project 수료<br>
-
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                </div>
 
-            </div>
-            <div class="col-sm-3">
+                    <div class="col-sm-2">
 
-                <div class="iconbox wow slideInUp" style="height: 350px">
-                    <div class="iconbox-icon">
-                        <span class="icon-badge"></span>
-                    </div>
-                    <div class="iconbox-text">
-                        <h3 class="iconbox-title">Certificate</h3>
-                        <div class="iconbox-desc" align="left">
-                            2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
-                            2018 Qualcomm Institute Project 수료<br>
+                        <div class="iconbox wow slideInRight" style="height: 350px">
+                            <div class="iconbox-icon">
+                                <span class="icon-badge"></span>
+                            </div>
+                            <div class="iconbox-text">
+                                <h3 class="iconbox-title">이윤식</h3>
+                                <div class="iconbox-desc"  align="left">
 
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-3">
-
-                <div class="iconbox wow slideInUp" style="height: 350px">
-                    <div class="iconbox-icon">
-                        <span class="icon-badge"></span>
-                    </div>
-                    <div class="iconbox-text">
-                        <h3 class="iconbox-title">Certificate</h3>
-                        <div class="iconbox-desc" align="left">
-                            2016 청년취업아카데미 IoT 융합프로젝트 수료<br>
-                            2018 Qualcomm Institute Project 수료<br>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-sm-3">
-
-                <div class="iconbox wow slideInRight" style="height: 350px">
-                    <div class="iconbox-icon">
-                        <span class="icon-question"></span>
-                    </div>
-                    <div class="iconbox-text">
-                        <h3 class="iconbox-title">others</h3>
-                        <div class="iconbox-desc"  align="left">
-                            Github &nbsp&nbsp<a href="https://github.com/khseob0715" >
-                            https://github.com/khseob0715</a><br>
-                            알고리즘 <a href="https://www.acmicpc.net/user/khseob0715" >
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </a>
-        </div>
-    </section>
+            </section>
 
-    <!-- Portfolio end -->
+            <div class="iconbox wow slideInRight" style="height: 350px">
+                <div class="iconbox-icon">
+                    <span class="icon-question"></span>
+                </div>
+                <div class="iconbox-text">
+                    <h3 class="iconbox-title">others</h3>
+                    <div class="iconbox-desc"  align="left">
+                        Github &nbsp&nbsp<a href="https://github.com/khseob0715" >
+                        https://github.com/khseob0715</a><br>
+                        알고리즘 <a href="https://www.acmicpc.net/user/khseob0715" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</section> -->
 
-    <!-- Skills start -->
 
-    <!-- Footer start -->
-
-    <footer id="footer">
-     <div class="container">
+<footer id="footer">
+   <div class="container">
       <div class="row">
 
-       <div class="col-sm-12">
+         <div class="col-sm-12">
 
-        <p class="heart">
-           <span class="fa fa-heart fa-2x animated pulse"></span>					
-       </p>
-       <p class="copyright">
-          © 2018 Aiden Kim
+            <p class="heart">
+             <span class="fa fa-heart fa-2x animated pulse"></span>					
+         </p>
+         <p class="copyright">
+          © 2018 Team Kim
       </p>
 
   </div>
 
 </div><!-- .row -->
-</div><!-- .container -->
+
+</div>
+
 </footer>
 
 <!-- Footer end -->
@@ -1021,6 +966,7 @@ function zoomChart3() {
 <script src="assets/js/jquery.cbpQTRotator.js"></script>
 <script src="assets/js/custom.js"></script>
 <script src="assets/search/index.js"></script>
+
 
 
 <!-- Scroll to top end-->
